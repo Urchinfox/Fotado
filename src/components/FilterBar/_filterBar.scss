@@ -1,0 +1,33 @@
+.filterBar {
+    max-width: 850px;
+    width: 100%;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(16px);
+    bottom: 10%;
+
+    /* 增加玻璃邊框亮度 */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-btn {
+    background: #E6E6E640;
+    backdrop-filter: blur(16px);
+
+
+    border: none;
+    // border-radius: 24px;
+
+    padding: 10px 20px;
+    color: #fff;
+
+    &:active {
+        background: rgba(27, 4, 4, 0.25);
+        transform: scale(0.97);
+    }
+}
+
+.filterBarMb {
+    top: 25%;
+    left: 50%;
+}

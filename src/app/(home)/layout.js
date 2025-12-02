@@ -1,6 +1,9 @@
 
-import Header from "@/components/Header";
+import DeskHeader from "@/components/Header/DeskHeader";
 import Footer from '@/components/Footer';
+import MobileHeader from "@/components/Header/MobileHeader";
+
+
 
 export const metadata = {
   title: "Fotado",
@@ -8,9 +11,16 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
+
   return (
     <>
-      <Header />
+      <div className="d-lg-block d-none">
+        <DeskHeader />
+      </div>
+      <div className="d-block d-lg-none">
+        <MobileHeader />
+      </div>
       <main className='flex-fill'>
         {children}
       </main>

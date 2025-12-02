@@ -1,0 +1,18 @@
+.banner-container {
+    max-width: 1300px;
+    width: 100%;
+    height: 539px; // desktop height
+
+    @include mobile {
+        height: 500px; // mobile height
+    }
+}
+
+.home-banner {
+    object-fit: cover;
+    border-radius: 32px;
+
+    @include mobile {
+        border-radius: 32px 32px 0 0;
+    }
+}

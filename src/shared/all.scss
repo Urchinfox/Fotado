@@ -2,3 +2,8 @@
 @import './variables';
 
 @import "bootstrap/scss/bootstrap";
+@import './utilities';
+
+@import '../app/home.scss';
+@import '../components/Header/header';
+@import '../components/FilterBar/filterBar.scss'

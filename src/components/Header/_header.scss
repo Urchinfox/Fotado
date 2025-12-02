@@ -1,0 +1,29 @@
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+
+
+.txt-hover {
+    transition: color 0.3s ease, transform 0.3s ease-in-out;
+}
+
+.txt-hover:hover {
+    color: green;
+    transform: translateY(3px);
+}
+
+
+// .mbHeader {
+//     min-height: 500px;
+//     background: url('../../shared/image/landingPageBanner.jpg') center/cover no-repeat;
+
+// }
