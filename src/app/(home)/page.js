@@ -84,7 +84,7 @@ export default async function Home() {
               <div className='h-100 d-flex align-items-center'>
                 <Image
                   src={card}
-                  className='rounded-3 object-fit-cover'
+                  className='rounded-circle object-fit-cover'
                   width={150}
                   height={160}
                   alt=''
@@ -156,7 +156,7 @@ export default async function Home() {
               <div className="col-8 text-neutral-30 ">
                 <div className='d-flex justify-content-between '>
                   <h2 className='fw-light'>Control Arm</h2>
-                  <i class="bi bi-arrow-up-right"></i>
+                  <i className="bi bi-arrow-up-right"></i>
                 </div>
                 <p>Engineered for precision and durability, our control arms deliver superior handling and stability—keeping your wheels aligned even under extreme performance conditions.</p>
               </div>
@@ -177,7 +177,7 @@ export default async function Home() {
               <div className="col-8 text-neutral-30 ">
                 <div className='d-flex justify-content-between '>
                   <h2 className='fw-light'>Control Arm</h2>
-                  <i class="bi bi-arrow-up-right"></i>
+                  <i className="bi bi-arrow-up-right"></i>
                 </div>
                 <p>Engineered for precision and durability, our control arms deliver superior handling and stability—keeping your wheels aligned even under extreme performance conditions.</p>
               </div>
