@@ -4,6 +4,7 @@ import Logo from '@/shared/image/Fotado.png'
 import banner from '@/shared/image/landingPageBanner.jpg'
 import FilterBar from '@/components/FilterBar/FilterBar';
 import card from '@/shared/image/card.webp'
+import news from '@/shared/image/news.webp'
 
 
 
@@ -186,6 +187,84 @@ export default async function Home() {
 
           </div>
         </div>
+      </div>
+    </section>
+
+
+    <section>
+      <div className="container">
+        <div className='rounded-5 bg-neutral-30 py-13 px-5'>
+          <div className='d-flex justify-content-between'>
+            <div>
+              <h2>Latest News</h2>
+              <p>What’s Next for Fotado</p>
+            </div>
+            <div>
+              <button className='btn btn-neutral-90' type='button'>More</button>
+            </div>
+          </div>
+
+          <ul className='news mt-9 d-flex'>
+            <li className='position-relative me-9'>
+              <div>
+                <Image
+                  className='rounded-4 w-100'
+                  src={news}
+                  width={336}
+                  height={400}
+                  alt=''
+                />
+              </div>
+              <div className='position-absolute bottom-0 start-25 d-flex p-7'>
+                <div>
+                  <p className='mb-2'>Fotado is dedicated to redefining vehicle performance.</p>
+                  <time datetime="2024-05-10">2024-05-10</time>
+                </div>
+                <div className='d-flex flex-column'><i className="fs-3 bi bi-arrow-up-right-circle mt-auto"></i></div>
+              </div>
+            </li>
+            <li className='position-relative me-9'>
+              <div>
+                <Image
+                  className='rounded-4 w-100'
+                  src={news}
+                  width={336}
+                  height={400}
+                  alt=''
+                />
+              </div>
+              <div className='position-absolute bottom-0 start-25 d-flex p-7'>
+                <div>
+                  <p className='mb-2'>Fotado is dedicated to redefining vehicle performance.</p>
+                  <time datetime="2024-05-10">2024-05-10</time>
+                </div>
+                <div className='d-flex flex-column'><i className="fs-3 bi bi-arrow-up-right-circle mt-auto"></i></div>
+              </div>
+            </li>
+            <li className='position-relative me-9'>
+              <div>
+                <Image
+                  className='rounded-4 w-100'
+                  src={news}
+                  width={336}
+                  height={400}
+                  alt=''
+                />
+              </div>
+              <div className='position-absolute bottom-0 start-25 d-flex p-7'>
+                <div>
+                  <p className='mb-2'>Fotado is dedicated to redefining vehicle performance.</p>
+                  <time datetime="2024-05-10">2024-05-10</time>
+                </div>
+                <div className='d-flex flex-column'><i className="fs-3 bi bi-arrow-up-right-circle mt-auto"></i></div>
+              </div>
+            </li>
+
+          </ul>
+
+
+        </div>
+
       </div>
     </section>
 
