@@ -4,7 +4,10 @@ import Logo from '@/shared/image/Fotado.png'
 import banner from '@/shared/image/landingPageBanner.jpg'
 import FilterBar from '@/components/FilterBar/FilterBar';
 import card from '@/shared/image/card.webp'
-import news from '@/shared/image/news.webp'
+import NewsCard from '@/components/Card/NewsCard';
+import PerformanceCard from '@/components/Card/PerformanceCard';
+import Link from 'next/link';
+import worker from '@/shared/image/worker.webp'
 
 
 
@@ -42,7 +45,7 @@ export default async function Home() {
 
     </section>
 
-    <section className='mt-10'>
+    <section className='mt-10 d-none d-lg-block'>
       <div className="container">
         <div className="row row-cols-1 row-cols-lg-3 g-4">
 
@@ -98,11 +101,10 @@ export default async function Home() {
       </div>
     </section>
 
-    <section className='mt-15'>
-
+    <section className='mt-lg-15 mt-11'>
       <div className="container">
         <div className="row">
-          <div className="col-6">
+          <div className="col-lg-6 col-12">
             <h2 className='fw-light'>Performance Upgrades</h2>
             <p className='mt-5 mb-4'>Enhance your vehicle’s performance with Fotado’s high-quality upgrade parts. Designed for strength and precision, our components deliver superior handling and durability under any driving condition.</p>
             <div>
@@ -119,152 +121,49 @@ export default async function Home() {
               <button type='button' className='btn btn-neutral-90'>View All Parts</button>
             </div>
           </div>
-          <div className="col-6">
-            <div className="row bg-neutral-90 mb-4 rounded-3 p-3">
-              <div className="col-4 d-flex flex-column justify-content-center">
-                <div>
-                  <Image
-                    src={card}
-                    className='object-fit-cover w-100 img-base rounded-2'
-                    width={122}
-                    height={122}
-                    alt=''
-                  />
-                </div>
-
-              </div>
-              <div className="col-8 text-neutral-30">
-                <div className='d-flex justify-content-between '>
-                  <h2 className='fw-light'>Control Arm</h2>
-                  <i className="bi bi-arrow-up-right"></i>
-                </div>
-                <p>Engineered for precision and durability, our control arms deliver superior handling and stability—keeping your wheels aligned even under extreme performance conditions.</p>
-              </div>
-            </div>
-            <div className="row bg-neutral-90 mb-4 rounded-3 p-3">
-              <div className="col-4 d-flex flex-column justify-content-center">
-                <div>
-                  <Image
-                    src={card}
-                    className='object-fit-cover w-100 img-base rounded-2'
-                    width={122}
-                    height={122}
-                    alt=''
-                  />
-                </div>
-
-              </div>
-              <div className="col-8 text-neutral-30 ">
-                <div className='d-flex justify-content-between '>
-                  <h2 className='fw-light'>Control Arm</h2>
-                  <i className="bi bi-arrow-up-right"></i>
-                </div>
-                <p>Engineered for precision and durability, our control arms deliver superior handling and stability—keeping your wheels aligned even under extreme performance conditions.</p>
-              </div>
-            </div>
-            <div className="row bg-neutral-90 mb-4 rounded-3 p-3">
-              <div className="col-4 d-flex flex-column justify-content-center">
-                <div>
-                  <Image
-                    src={card}
-                    className='object-fit-cover w-100 img-base rounded-2'
-                    width={122}
-                    height={122}
-                    alt=''
-                  />
-                </div>
-
-              </div>
-              <div className="col-8 text-neutral-30 ">
-                <div className='d-flex justify-content-between '>
-                  <h2 className='fw-light'>Control Arm</h2>
-                  <i className="bi bi-arrow-up-right"></i>
-                </div>
-                <p>Engineered for precision and durability, our control arms deliver superior handling and stability—keeping your wheels aligned even under extreme performance conditions.</p>
-              </div>
-            </div>
-
-
+          <div className="col-lg-6 col-12 mt-lg-0 mt-5">
+            <PerformanceCard />
           </div>
         </div>
       </div>
     </section>
 
 
+    <section className='mt-15'>
+      <NewsCard />
+    </section>
+
+
     <section>
-      <div className="container">
-        <div className='rounded-5 bg-neutral-30 py-13 px-5'>
-          <div className='d-flex justify-content-between'>
-            <div>
-              <h2>Latest News</h2>
-              <p>What’s Next for Fotado</p>
+      <div className="container-lg p-0">
+        <div className='p-lg-5 p-0'>
+          <div className="row align-items-center g-0">
+            <div className="col-6 d-lg-flex justify-content-center align-items-center d-none">
+              <div style={{ maxWidth: '304px' }}>
+                <p className='fs-2'>What we do</p>
+                <p className='mt-5 mb-12'>At Fotado, we specialize in high-performance automotive parts designed to enhance driving precision, stability, and style. From suspension components to custom upgrades, we deliver quality you can trust on and off the track.</p>
+                <Link href="/contact" className="btn btn-neutral-30">
+                  <i className="me-1 bi bi-arrow-up-right"></i>Contact us
+                </Link>
+              </div>
             </div>
-            <div>
-              <button className='btn btn-neutral-90' type='button'>More</button>
+            <div className="col-lg-6 col-12 position-relative">
+              <div>
+                <Image
+                  className='img-base rounded-4'
+                  src={worker}
+                  width={637}
+                  height={416}
+                  alt=''
+                />
+              </div>
+              <p className='d-none d-lg-block fs-6 position-absolute start-50 translate-middle-x text-white' style={{ bottom: '25px' }}>Fotado is dedicated to redefining vehicle performance.</p>
+              <Link className='position-absolute bottom-0' href='/' style={{ right: '20px' }}><i className="fs-1 text-white bi bi-arrow-up-right-circle"></i></Link>
             </div>
+
           </div>
 
-          <ul className='news mt-9 d-flex'>
-            <li className='position-relative me-9'>
-              <div>
-                <Image
-                  className='rounded-4 w-100'
-                  src={news}
-                  width={336}
-                  height={400}
-                  alt=''
-                />
-              </div>
-              <div className='position-absolute bottom-0 start-25 d-flex p-7'>
-                <div>
-                  <p className='mb-2'>Fotado is dedicated to redefining vehicle performance.</p>
-                  <time datetime="2024-05-10">2024-05-10</time>
-                </div>
-                <div className='d-flex flex-column'><i className="fs-3 bi bi-arrow-up-right-circle mt-auto"></i></div>
-              </div>
-            </li>
-            <li className='position-relative me-9'>
-              <div>
-                <Image
-                  className='rounded-4 w-100'
-                  src={news}
-                  width={336}
-                  height={400}
-                  alt=''
-                />
-              </div>
-              <div className='position-absolute bottom-0 start-25 d-flex p-7'>
-                <div>
-                  <p className='mb-2'>Fotado is dedicated to redefining vehicle performance.</p>
-                  <time datetime="2024-05-10">2024-05-10</time>
-                </div>
-                <div className='d-flex flex-column'><i className="fs-3 bi bi-arrow-up-right-circle mt-auto"></i></div>
-              </div>
-            </li>
-            <li className='position-relative me-9'>
-              <div>
-                <Image
-                  className='rounded-4 w-100'
-                  src={news}
-                  width={336}
-                  height={400}
-                  alt=''
-                />
-              </div>
-              <div className='position-absolute bottom-0 start-25 d-flex p-7'>
-                <div>
-                  <p className='mb-2'>Fotado is dedicated to redefining vehicle performance.</p>
-                  <time datetime="2024-05-10">2024-05-10</time>
-                </div>
-                <div className='d-flex flex-column'><i className="fs-3 bi bi-arrow-up-right-circle mt-auto"></i></div>
-              </div>
-            </li>
-
-          </ul>
-
-
         </div>
-
       </div>
     </section>
 

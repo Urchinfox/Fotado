@@ -1,6 +1,6 @@
 
 import DeskHeader from "@/components/Header/DeskHeader";
-import Footer from '@/components/Footer';
+import Footer from '@/components/Footer/Footer';
 import MobileHeader from "@/components/Header/MobileHeader";
 
 
