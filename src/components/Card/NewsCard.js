@@ -3,6 +3,7 @@ import Image from 'next/image';
 import news from '@/shared/image/news.webp'
 import news1 from '@/shared/image/news1.webp'
 import news2 from '@/shared/image/news2.webp'
+import Link from 'next/link';
 
 
 export default function NewsCard() {
@@ -36,9 +37,9 @@ export default function NewsCard() {
                         <p>What’s Next for Fotado</p>
                     </div>
                     <div>
-                        <button className="btn btn-neutral-90" type="button">
+                        <Link className="btn btn-neutral-90" href='/news'>
                             More
-                        </button>
+                        </Link>
                     </div>
                 </div>
 

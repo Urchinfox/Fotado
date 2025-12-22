@@ -49,7 +49,7 @@ export default function FilterBar() {
                 </div>
 
                 <div className="position-relative me-2">
-                    <input type="text" className="ps-5 py-1 rounded-pill border-0 " placeholder='OEM or CH NO.' />
+                    <input type="text" className="ps-5 py-1 rounded-pill border-0 " placeholder='OEM or FT NO.' />
                     <i className="text-dark bi bi-search position-absolute top-50 start-0 translate-middle-y px-1"></i>
                 </div>
 

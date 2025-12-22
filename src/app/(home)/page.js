@@ -1,4 +1,3 @@
-import { createClient } from '@/lib/supabase-server';
 import Image from 'next/image';
 import Logo from '@/shared/image/Fotado.png'
 import banner from '@/shared/image/landingPageBanner.jpg'
@@ -13,22 +12,13 @@ import worker from '@/shared/image/worker.webp'
 
 
 export default async function Home() {
-  const supabase = createClient();
 
-  const { data: categories, error } = await supabase
-    .from('categories')
-    .select('*');
-
-  if (error) {
-    console.error('Supabase 連線失敗:', error);
-    return <div>連線失敗！請檢查 key</div>;
-  }
 
   return (<>
     <section className='mt-5'>
       <h1 className="sr-only">Fotado</h1>
 
-      <div className="container">
+      <div className=" container-lg px-0 px-lg-3">
         <div className='position-relative banner-container'>
           <Image
             src={banner}
@@ -40,10 +30,57 @@ export default async function Home() {
           <FilterBar />
         </div>
       </div>
-
-
-
     </section>
+
+    <section className='border rounded-3 py-10 bg-white shadow d-block d-lg-none' style={{ marginTop: '-30px', zIndex: '10', position: 'relative' }}>
+      <div className="container">
+        <div className='mb-6'>
+          <p className='fw-bolder mb-2'>System</p>
+          <Link href='/' className='btn btn-sm btn-neutral-20'>suspension</Link>
+        </div>
+        <div className='mb-6'>
+          <p className='fw-bolder mb-2'>Part</p>
+          <Link href='/' className='btn btn-sm btn-neutral-20 me-2 mb-2'>Shock Absorber</Link>
+          <Link href='/' className='btn btn-sm btn-neutral-20 me-2 mb-2 bg-dark text-white'>Control Arm</Link>
+          <Link href='/' className='btn btn-sm btn-neutral-20 me-2 mb-2'>Lateral Link</Link>
+          <Link href='/' className='btn btn-sm btn-neutral-20 me-2 mb-2'>Stabilizer Link</Link>
+        </div>
+        <div className='mb-6'>
+          <p className='fw-bolder mb-2'>Brands</p>
+          <div className="d-flex">
+            <div className='text-center'>
+              <p className='d-inline-block me-2 p-6 rounded-circle bg-neutral-20'>Ford</p>
+              <p>Ford</p>
+            </div>
+            <div className='text-center'>
+              <p className='d-inline-block me-2 p-6 rounded-circle bg-neutral-20'>Kia</p>
+              <p>Kia</p>
+            </div>
+            <div className='text-center'>
+              <p className='d-inline-block me-2 p-6 rounded-circle bg-neutral-20'>Audi</p>
+              <p>Audi</p>
+            </div>
+            <div className='text-center'>
+              <p className='d-inline-block me-2 p-6 rounded-circle bg-neutral-20'>kia</p>
+              <p>kia</p>
+            </div>
+
+          </div>
+        </div>
+        <div className='mb-12'>
+          <p className='fw-bolder mb-2'>Search</p>
+          <div className="position-relative me-2">
+            <input type="text" className="bg-neutral-20 ps-8 py-1 rounded-pill border-0 " placeholder='OEM or FT NO.' />
+            <i className="text-dark bi bi-search position-absolute top-50 start-0 translate-middle-y px-2"></i>
+          </div>
+        </div>
+        <div className='text-center'>
+          <button type='button' className='border-0 rounded-pill bg-neutral-90 text-light py-2 px-4'><i className="bi bi-search"></i> Search</button>
+        </div>
+      </div>
+    </section>
+
+
 
     <section className='mt-10 d-none d-lg-block'>
       <div className="container">
@@ -105,7 +142,7 @@ export default async function Home() {
       <div className="container">
         <div className="row">
           <div className="col-lg-6 col-12">
-            <h2 className='fw-light'>Performance Upgrades</h2>
+            <h2 className='fw-bolder'>Performance Upgrades</h2>
             <p className='mt-5 mb-4'>Enhance your vehicle’s performance with Fotado’s high-quality upgrade parts. Designed for strength and precision, our components deliver superior handling and durability under any driving condition.</p>
             <div>
               <Image
@@ -118,7 +155,7 @@ export default async function Home() {
             </div>
             <div className='text-center mt-3'>
 
-              <button type='button' className='btn btn-neutral-90'>View All Parts</button>
+              <Link href='/product' className='btn btn-neutral-90'>View All Parts</Link>
             </div>
           </div>
           <div className="col-lg-6 col-12 mt-lg-0 mt-5">
@@ -129,12 +166,12 @@ export default async function Home() {
     </section>
 
 
-    <section className='mt-15'>
+    <section className='my-lg-15 my-12'>
       <NewsCard />
     </section>
 
 
-    <section>
+    <section className='mb-lg-15 mb-12'>
       <div className="container-lg p-0">
         <div className='p-lg-5 p-0'>
           <div className="row align-items-center g-0">
@@ -168,20 +205,7 @@ export default async function Home() {
     </section>
 
 
-    <div>
-      <h2>This is home page FOTADO</h2>
-      <button type="button" className="btn btn-primary">yes i did it</button>
 
-      <h2>Supabase 連線成功！ Upgrade</h2>
-      <p>找到 {categories.length} 筆類別：</p>
-      <ul>
-        {categories.map(cat => (
-          <li key={cat.id}>
-            {cat.name} {cat.parent_id ? '(小類)' : '(大類)'}
-          </li>
-        ))}
-      </ul>
-    </div>
   </>
   );
 }
