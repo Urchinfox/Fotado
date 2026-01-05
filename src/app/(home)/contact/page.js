@@ -3,7 +3,8 @@ import { createClient } from '@/lib/supabase-server';
 import worker from '@/shared/image/worker.webp';
 import Image from "next/image";
 import styles from './contact.module.scss';
-import timeline from '@/shared/image/timeline.webp'
+import timeline from '@/shared/image/timeline.webp';
+import licence from '@/shared/image/licence.webp';
 
 const res = await fetch('https://randomuser.me/api/');
 const { results } = await res.json();
@@ -22,7 +23,7 @@ async function About() {
     }
 
     return (<>
-        <div className="mt-lg-13 mt-0">
+        <div className="mt-lg-13 mt-0 mb-lg-15 mb-12">
             <div className="container-lg px-0">
                 <div className="row g-0 mb-lg-14 mb-0">
                     <div className="col-lg-7 d-none d-lg-block">
@@ -57,6 +58,7 @@ async function About() {
                         </div>
                     </div>
                 </div>
+
                 <div className="text-center d-none d-lg-block">
                     <Image
                         className="img-base"
@@ -66,7 +68,7 @@ async function About() {
                         alt="/"
                     />
                 </div>
-                <div className={`rounded-5 bg-neutral-80 py-12 container-fluid ${styles.timeline}`}>
+                <div className={`rounded-5 bg-neutral-80 py-12 container-fluid d-block d-lg-none ${styles.timeline}`}>
                     <div className="mx-auto border-start border-white " style={{ maxWidth: '301px' }}>
                         <div className="mb-3 ps-2">
                             <p className={`${styles['timeline-yr']} mb-3 text-neutral-90 text-center`}>1981</p>
@@ -85,16 +87,11 @@ async function About() {
         </div>
 
 
-
-
-
-
-
         <div className={styles.certification}>
             <div className={styles['certification-container']}>
                 <div className={styles['certification-content']}>
                     <div className={`${styles['certification-image']} mb-lg-0 mb-11`}>
-                        <Image src={worker} width={331} height={331} alt="" className="img-base" />
+                        <Image src={licence} width={272} height={385} alt="" className="img-base" />
                     </div>
                     <div className={styles['certification-text']}>
                         <p>For over four decades, Fotado Enterprise has remained steadfast in our philosophy of “Quality First, Customer Priority.” Through continuous innovation, superior product quality, and responsive service, we are committed to being your most dependable long-term partner in the global automotive aftermarket.</p>
