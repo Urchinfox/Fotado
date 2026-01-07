@@ -25,7 +25,7 @@ function DeskHeader() {
                 <nav>
                     <ul className="d-flex">
                         <li className="me-6">
-                            <Link href="/product" className="txt-hover a-text">
+                            <Link href="/products" className="txt-hover a-text">
                                 Product
                             </Link>
                         </li>

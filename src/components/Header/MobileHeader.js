@@ -40,7 +40,7 @@ export default function MobileHeader() {
                                         <Link href="/" className="txt-hover a-text" onClick={closeMenu}>Home</Link>
                                     </li>
                                     <li className="mb-6">
-                                        <Link href="/product" className="txt-hover a-text" onClick={closeMenu}>Product</Link>
+                                        <Link href="/products" className="txt-hover a-text" onClick={closeMenu}>Product</Link>
                                     </li>
                                     <li className="mb-6">
                                         <Link className="txt-hover a-text" onClick={closeMenu} href='/news'>News</Link>
