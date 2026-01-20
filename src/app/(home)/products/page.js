@@ -1,71 +1,151 @@
-import ProductsCard from "@/components/Card/ProductsCard";
+// src/app/products/page.js
+import { createClient } from '@/lib/supabase-server';
+import ProductsCard from '@/components/Card/ProductsCard';
+import ProductsModal from '@/components/Modal/ProductsModal';
 
-function Product() {
-    return (<>
-        <div className='d-flex align-items-center my-12 container'>
-            <div className='d-none d-lg-block me-2'>
-                <button className="border py-1 px-3 rounded-pill bg-white border-neutral-40" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i className="bi bi-chevron-down pe-1"></i>
-                    ENGINE SYSTEM
-                </button>
-                <ul className="dropdown-menu">
-                    <li><a className="dropdown-item" href="#">Action</a></li>
-                    <li><a className="dropdown-item" href="#">Another action</a></li>
-                </ul>
+export default async function ProductsPage() {
+    const supabase = createClient();
+
+    // 讀取所有 product_vehicles，並 join products
+    const { data: vehicleData, error } = await supabase
+        .from('product_vehicles')
+        .select(`
+        id,
+        brand,
+        model,
+        year,
+        product_id,
+        products!product_id (
+          id,
+          ft_number,
+          name,
+          description,
+          image_url,
+          link,
+          category_id
+        )
+      `)
+        .order('brand', { ascending: true });  // 按品牌排序
+
+    if (error) {
+        console.error('讀取車型資料失敗:', error);
+        return <div className="text-center py-12">載入失敗，請稍後再試</div>;
+    }
+
+    if (!vehicleData || vehicleData.length === 0) {
+        return (
+            <div className="text-center py-12 text-neutral-40">
+                <p className="fs-4">查無產品資料</p>
+                <p>請在 Supabase 新增產品與車型，或稍後再試</p>
             </div>
-            <div className='d-none d-lg-block me-2'>
-                <button className="bg-white border-neutral-40 border py-1 px-3 rounded-pill" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i className="bi bi-chevron-down pe-1"></i>
-                    PART
-                </button>
-                <ul className="dropdown-menu">
-                    <li><a className="dropdown-item" href="#">Action</a></li>
-                    <li><a className="dropdown-item" href="#">Another action</a></li>
-                </ul>
+        );
+    }
+
+    // 讀取 categories（badge 用）
+    const { data: categories } = await supabase.from('categories').select('id, name');
+    const categoryMap = {};
+    categories?.forEach(cat => {
+        categoryMap[cat.id] = cat.name;
+    });
+
+    // 按 product_id + brand 群組（同一 FT 不同品牌拆卡片）
+    const groupedData = {};
+    vehicleData.forEach(v => {
+        const productId = v.product_id;
+        const brand = v.brand;
+
+        const key = `${productId}-${brand}`; // 唯一 key：FT + 品牌
+
+        if (!groupedData[key]) {
+            groupedData[key] = {
+                product: v.products,
+                brand,
+                vehicleList: [], // 所有車型（給 modal 用）
+            };
+        }
+
+        groupedData[key].vehicleList.push({
+            model: v.model,
+            year: v.year,
+        });
+    });
+
+    // 轉成陣列，每個 key 就是一張卡片
+    const cardsData = Object.values(groupedData).map(group => ({
+        ...group.product,
+        brand: group.brand,
+        vehicleList: group.vehicleList,
+    }));
+    return (
+        <>
+
+            <div className='d-flex align-items-center my-12 container'>
+                {/* ... 你原本的篩選區程式碼 ... */}
+                {/* 先保持靜態，之後再動態 */}
+                <div className='d-none d-lg-block me-2'>
+                    <button className="border py-1 px-3 rounded-pill bg-white border-neutral-40" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i className="bi bi-chevron-down pe-1"></i>
+                        ENGINE SYSTEM
+                    </button>
+                    <ul className="dropdown-menu">
+                        <li><a className="dropdown-item" href="#">Action</a></li>
+                        <li><a className="dropdown-item" href="#">Another action</a></li>
+                    </ul>
+                </div>
+                {/* 其他下拉保持原樣 */}
+                <div className='d-none d-lg-block me-2'>
+                    <button className="bg-white border-neutral-40 border py-1 px-3 rounded-pill" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i className="bi bi-chevron-down pe-1"></i>
+                        PART
+                    </button>
+                    <ul className="dropdown-menu">
+                        <li><a className="dropdown-item" href="#">Action</a></li>
+                        <li><a className="dropdown-item" href="#">Another action</a></li>
+                    </ul>
+                </div>
+                <div className='d-none d-lg-block me-2'>
+                    <button className="bg-white border-neutral-40 border py-1 px-3 rounded-pill" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i className="bi bi-chevron-down pe-1"></i>
+                        MAKE
+                    </button>
+                    <ul className="dropdown-menu">
+                        <li><a className="dropdown-item" href="#">Action</a></li>
+                        <li><a className="dropdown-item" href="#">Another action</a></li>
+                    </ul>
+                </div>
+                <div className='d-none d-lg-block me-2'>
+                    <button className="bg-white border-neutral-40 border py-1 px-3 rounded-pill" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i className="bi bi-chevron-down pe-1"></i>
+                        MODEL
+                    </button>
+                    <ul className="dropdown-menu">
+                        <li><a className="dropdown-item" href="#">Action</a></li>
+                        <li><a className="dropdown-item" href="#">Another action</a></li>
+                    </ul>
+                </div>
+
+                <div className="position-relative me-2">
+                    <input type="text" className="ps-6 py-1 rounded-pill bg-white border-neutral-40 border " placeholder='OEM or FT NO.' />
+                    <i className="text-dark bi bi-search position-absolute top-50 start-0 translate-middle-y px-1"></i>
+                </div>
+                <div className="d-block d-lg-none me-2"><i className="fs-5 bi bi-funnel"></i></div>
+
+                <div>
+                    <button type='button' className='border-0 rounded-2 bg-neutral-90 text-light py-2 px-3'><i className="bi bi-search"></i> Search</button>
+                </div>
             </div>
-            <div className='d-none d-lg-block me-2'>
-                <button className="bg-white border-neutral-40 border py-1 px-3 rounded-pill" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i className="bi bi-chevron-down pe-1"></i>
-                    MAKE
 
-                </button>
-                <ul className="dropdown-menu">
-                    <li><a className="dropdown-item" href="#">Action</a></li>
-                    <li><a className="dropdown-item" href="#">Another action</a></li>
-                </ul>
+
+
+
+            <section>
+                <ProductsCard cardsData={cardsData} categoryMap={categoryMap} />
+            </section>
+
+            {/* 分頁先保持靜態 */}
+            <div className="text-center fs-6 mt-lg-12 mt-7 mb-7">
+                <span><i className="bi bi-arrow-left-circle me-4"></i>1 / 1<i className="bi bi-arrow-right-circle ms-4"></i></span>
             </div>
-            <div className='d-none d-lg-block me-2'>
-                <button className="bg-white border-neutral-40 border py-1 px-3 rounded-pill" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i className="bi bi-chevron-down pe-1"></i>
-                    MODEL
-                </button>
-                <ul className="dropdown-menu">
-                    <li><a className="dropdown-item" href="#">Action</a></li>
-                    <li><a className="dropdown-item" href="#">Another action</a></li>
-                </ul>
-            </div>
-
-            <div className="position-relative me-2">
-                <input type="text" className="ps-6 py-1 rounded-pill bg-white border-neutral-40 border " placeholder='OEM or FT NO.' />
-                <i className="text-dark bi bi-search position-absolute top-50 start-0 translate-middle-y px-1"></i>
-            </div>
-            <div className="d-block d-lg-none me-2"><i className="fs-5 bi bi-funnel"></i></div>
-
-            <div>
-                <button type='button' className='border-0 rounded-2 bg-neutral-90 text-light py-2 px-3'><i className="bi bi-search"></i> Search</button>
-            </div>
-
-        </div>
-
-
-        <section>
-            <ProductsCard />
-        </section>
-
-        <div className="text-center fs-6 mt-lg-12 mt-7 mb-7">
-            <span><i className="bi bi-arrow-left-circle me-4"></i>1 / 24<i className="bi bi-arrow-right-circle ms-4"></i></span>
-        </div>
-    </>)
+        </>
+    );
 }
-
-export default Product;
