@@ -1,10 +1,27 @@
 // src/app/products/page.js
 import { createClient } from '@/lib/supabase-server';
 import ProductsCard from '@/components/Card/ProductsCard';
-import ProductsModal from '@/components/Modal/ProductsModal';
+import Pagination from '@/components/Pagination/Pagination';
 
-export default async function ProductsPage() {
+export default async function ProductsPage({ searchParams }) {
     const supabase = createClient();
+
+    // 讀取 page，從 URL ?page=x 取得，預設 1
+    const currentPage = Number(searchParams.page) || 1;
+
+    // 每頁 12 筆
+    const pageSize = 13;
+
+    // 計算偏移（從第幾筆開始）
+    const offset = (currentPage - 1) * pageSize;
+
+    // 讀取總筆數（為了算總頁數）
+    const { count: totalCount } = await supabase
+        .from('product_vehicles')
+        .select('*', { count: 'exact', head: true });
+
+    // 總頁數
+    const totalPages = Math.ceil((totalCount || 0) / pageSize);
 
     // 讀取所有 product_vehicles，並 join products
     const { data: vehicleData, error } = await supabase
@@ -25,21 +42,21 @@ export default async function ProductsPage() {
           category_id
         )
       `)
-        .order('brand', { ascending: true });  // 按品牌排序
+        .order('brand', { ascending: true }) // 按品牌排序
+        .range(offset, offset + pageSize - 1);  // ← 這行新增：只取當頁
 
     if (error) {
         console.error('讀取車型資料失敗:', error);
         return <div className="text-center py-12">載入失敗，請稍後再試</div>;
     }
 
-    if (!vehicleData || vehicleData.length === 0) {
-        return (
-            <div className="text-center py-12 text-neutral-40">
-                <p className="fs-4">查無產品資料</p>
-                <p>請在 Supabase 新增產品與車型，或稍後再試</p>
-            </div>
-        );
-    }
+    // if (!vehicleData || vehicleData.length === 0) {
+    //     return (
+    //         <div className="text-center py-12 text-neutral-40">
+    //             <p className="fs-4">查無產品資料</p>
+    //         </div>
+    //     );
+    // }
 
     // 讀取 categories（badge 用）
     const { data: categories } = await supabase.from('categories').select('id, name');
@@ -136,15 +153,23 @@ export default async function ProductsPage() {
             </div>
 
 
-
-
             <section>
-                <ProductsCard cardsData={cardsData} categoryMap={categoryMap} />
+                {cardsData.length > 0 ? (
+                    <ProductsCard cardsData={cardsData} categoryMap={categoryMap} />
+                ) : (
+                    <div className="text-center py-12 text-neutral-40">
+                        <p className="fs-4">查無產品資料</p>
+                    </div>
+                )}
             </section>
 
-            {/* 分頁先保持靜態 */}
-            <div className="text-center fs-6 mt-lg-12 mt-7 mb-7">
+            {/* <div className="text-center fs-6 mt-lg-12 mt-7 mb-7">
                 <span><i className="bi bi-arrow-left-circle me-4"></i>1 / 1<i className="bi bi-arrow-right-circle ms-4"></i></span>
+            </div> */}
+
+
+            <div className="text-center fs-6 mt-lg-12 mt-7 mb-7">
+                <Pagination currentPage={currentPage} totalPages={totalPages} />
             </div>
         </>
     );

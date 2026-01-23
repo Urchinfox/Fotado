@@ -31,7 +31,9 @@ export default function ProductsCard({ cardsData = [], categoryMap = {} }) {
                                         data-bs-toggle="modal"
                                         data-bs-target="#productModal"
                                         data-product-id={card.id}
-                                        data-brand={card.brand}  // 新增：傳品牌給 modal
+                                        data-brand={card.brand}  // 傳品牌給 modal
+                                        data-ft-number={card.ft_number}  // 傳編號給 modal
+                                        data-name={card.name} //傳品名給 modal
                                     >
                                         View Details <i className="bi bi-three-dots rounded-circle text-neutral-40 border border-neutral-40"></i>
                                     </button>

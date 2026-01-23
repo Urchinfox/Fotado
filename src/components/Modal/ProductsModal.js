@@ -60,6 +60,8 @@ export default function ProductsModal() {
     const [vehicles, setVehicles] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [ftNumber, setFtNumber] = useState(null);
+    const [name, setName] = useState(null);
 
     // 監聽 modal 開啟事件
     useEffect(() => {
@@ -67,10 +69,12 @@ export default function ProductsModal() {
 
         const handleShow = (event) => {
             const button = event.relatedTarget;
-            const id = button.getAttribute('data-product-id');
-            const selectedBrand = button.getAttribute('data-brand');
-            setProductId(id);
-            setBrand(selectedBrand);
+            // const id = button.getAttribute('data-product-id');
+            // const selectedBrand = button.getAttribute('data-brand');
+            setProductId(button.getAttribute('data-product-id'));
+            setBrand(button.getAttribute('data-brand'));
+            setFtNumber(button.getAttribute('data-ft-number'));
+            setName(button.getAttribute('data-name'));
         };
 
         modal.addEventListener('show.bs.modal', handleShow);
@@ -112,24 +116,24 @@ export default function ProductsModal() {
         <div className="modal fade" id="productModal" tabIndex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-lg">
                 <div className="modal-content py-6 px-8 glass-modal">
-                    <div className="d-flex justify-content-between mb-12">
-                        <div>
+                    <div className="d-flex justify-content-between mb-lg-12 mb-8">
+
+                        <div className="mt-2">
                             <span className="badge text-bg-neutral-80 text-neutral-30 fw-light me-3">
-                                FT-37A001
+                                {ftNumber || 'FT-XXXXXX'}
                             </span>
                             <span className="badge text-bg-neutral-80 text-neutral-30 fw-light me-3">
                                 {brand || '品牌'}
                             </span>
                             <span className="badge text-bg-neutral-80 text-neutral-30 fw-light">
-                                Control Arm
+                                {name || '產品名稱'}
                             </span>
-
                         </div>
 
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
-                    <div className="modal-body mb-13">
+                    <div className="modal-body mb-lg-13 mb-8">
                         {loading ? (
                             <p className="text-center">載入中...</p>
                         ) : error ? (
