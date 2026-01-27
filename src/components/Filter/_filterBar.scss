@@ -31,3 +31,16 @@
     top: 25%;
     left: 50%;
 }
+
+
+
+
+// Filter Card Hover Effect -----------------------
+.filterCard {
+    transition: transform 0.3s ease;
+}
+
+.filterCard:hover {
+    transform: translateY(-10px);
+    cursor: pointer;
+}

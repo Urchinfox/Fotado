@@ -2,9 +2,8 @@
 import { createClient } from '@/lib/supabase-server';
 import ProductsCard from '@/components/Card/ProductsCard';
 import Pagination from '@/components/Pagination/Pagination';
-import Image from 'next/image';
-import Link from 'next/link';
-import { productsCardData } from '@/app/staticData/data';
+import FilterCards from '@/components/Filter/FilterCard';
+
 
 
 export default async function ProductsPage({ searchParams }) {
@@ -149,12 +148,12 @@ export default async function ProductsPage({ searchParams }) {
                 </div>
             </div>
 
-            <section className="container">
+            {/* <section className="container">
                 <div className="row row-cols-2 g-4">
                     {
                         productsCardData.map((item) => {
                             return (
-                                <div className="col" key={item.id}>
+                                <div className="col filterCard" key={item.id}>
                                     <div className='bg-neutral-90 p-4 rounded-3 h-100'>
 
                                         <div className="row align-items-center">
@@ -188,23 +187,38 @@ export default async function ProductsPage({ searchParams }) {
                         })
                     }
                 </div>
-            </section>
+            </section> */}
+
+            <FilterCards hasFilter={Object.keys(searchParams).length > 0} />
 
 
-            <section>
-                {cardsData.length > 0 ? (
-                    <ProductsCard cardsData={cardsData} categoryMap={categoryMap} />
-                ) : (
-                    <div className="text-center py-12 text-neutral-40">
-                        <p className="fs-4">查無產品資料</p>
+            {/* 判斷是否有篩選條件 */}
+            {Object.keys(searchParams).length > 0 ? (
+                // 有篩選條件 → 顯示產品列表 + 分頁
+                <>
+                    <section>
+                        {cardsData.length > 0 ? (
+                            <ProductsCard cardsData={cardsData} categoryMap={categoryMap} />
+                        ) : (
+                            <div className="text-center py-12 text-neutral-40">
+                                <p className="fs-4">查無符合條件的產品</p>
+                                <p>請調整篩選條件，或稍後再試</p>
+                            </div>
+                        )}
+                    </section>
+
+                    <div className="text-center fs-6 mt-lg-12 mt-7 mb-7">
+                        <Pagination currentPage={currentPage} totalPages={totalPages} />
                     </div>
-                )}
-            </section>
+                </>
+            ) : (
+                // 無篩選條件 → 只顯示提示
+                <div className="text-center py-12 text-neutral-40">
+                    <p className="fs-4">請從上方選擇類別開始瀏覽</p>
+                    <p>點擊篩選卡片或使用上方篩選條，即可查看產品</p>
+                </div>
+            )}
 
-
-            <div className="text-center fs-6 mt-lg-12 mt-7 mb-7">
-                <Pagination currentPage={currentPage} totalPages={totalPages} />
-            </div>
         </>
     );
 }
