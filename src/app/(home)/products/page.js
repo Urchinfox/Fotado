@@ -2,8 +2,15 @@
 import { createClient } from '@/lib/supabase-server';
 import ProductsCard from '@/components/Card/ProductsCard';
 import Pagination from '@/components/Pagination/Pagination';
+import Image from 'next/image';
+import Link from 'next/link';
+import { productsCardData } from '@/app/staticData/data';
+
 
 export default async function ProductsPage({ searchParams }) {
+
+
+
     const supabase = createClient();
 
     // 讀取 page，從 URL ?page=x 取得，預設 1
@@ -50,13 +57,7 @@ export default async function ProductsPage({ searchParams }) {
         return <div className="text-center py-12">載入失敗，請稍後再試</div>;
     }
 
-    // if (!vehicleData || vehicleData.length === 0) {
-    //     return (
-    //         <div className="text-center py-12 text-neutral-40">
-    //             <p className="fs-4">查無產品資料</p>
-    //         </div>
-    //     );
-    // }
+
 
     // 讀取 categories（badge 用）
     const { data: categories } = await supabase.from('categories').select('id, name');
@@ -102,11 +103,10 @@ export default async function ProductsPage({ searchParams }) {
                 <div className='d-none d-lg-block me-2'>
                     <button className="border py-1 px-3 rounded-pill bg-white border-neutral-40" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i className="bi bi-chevron-down pe-1"></i>
-                        ENGINE SYSTEM
+                        SYSTEM
                     </button>
                     <ul className="dropdown-menu">
-                        <li><a className="dropdown-item" href="#">Action</a></li>
-                        <li><a className="dropdown-item" href="#">Another action</a></li>
+                        <li><a className="dropdown-item" href="#">Suspension</a></li>
                     </ul>
                 </div>
                 {/* 其他下拉保持原樣 */}
@@ -116,8 +116,7 @@ export default async function ProductsPage({ searchParams }) {
                         PART
                     </button>
                     <ul className="dropdown-menu">
-                        <li><a className="dropdown-item" href="#">Action</a></li>
-                        <li><a className="dropdown-item" href="#">Another action</a></li>
+                        <li><a className="dropdown-item" href="#">Control Arm</a></li>
                     </ul>
                 </div>
                 <div className='d-none d-lg-block me-2'>
@@ -126,8 +125,7 @@ export default async function ProductsPage({ searchParams }) {
                         MAKE
                     </button>
                     <ul className="dropdown-menu">
-                        <li><a className="dropdown-item" href="#">Action</a></li>
-                        <li><a className="dropdown-item" href="#">Another action</a></li>
+                        <li><a className="dropdown-item" href="#">Toyota</a></li>
                     </ul>
                 </div>
                 <div className='d-none d-lg-block me-2'>
@@ -136,8 +134,7 @@ export default async function ProductsPage({ searchParams }) {
                         MODEL
                     </button>
                     <ul className="dropdown-menu">
-                        <li><a className="dropdown-item" href="#">Action</a></li>
-                        <li><a className="dropdown-item" href="#">Another action</a></li>
+                        <li><a className="dropdown-item" href="#">RAV4</a></li>
                     </ul>
                 </div>
 
@@ -152,6 +149,47 @@ export default async function ProductsPage({ searchParams }) {
                 </div>
             </div>
 
+            <section className="container">
+                <div className="row row-cols-2 g-4">
+                    {
+                        productsCardData.map((item) => {
+                            return (
+                                <div className="col" key={item.id}>
+                                    <div className='bg-neutral-90 p-4 rounded-3 h-100'>
+
+                                        <div className="row align-items-center">
+                                            <div className="col-4 d-flex flex-column justify-content-center">
+                                                <div>
+                                                    <Image
+                                                        src={item.img}
+                                                        className="object-fit-cover w-100 img-base rounded-2"
+                                                        width={122}
+                                                        height={122}
+                                                        alt={item.alt}
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="col-8 text-neutral-30">
+                                                <div className="p-3">
+                                                    <div className="d-flex justify-content-between">
+                                                        <h2 className="fw-light">{item.title}</h2>
+                                                        <Link href={item.link}>
+                                                            <i className="bi bi-arrow-up-right"></i>
+                                                        </Link>
+                                                    </div>
+                                                    <p>{item.txt}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+            </section>
+
 
             <section>
                 {cardsData.length > 0 ? (
@@ -162,10 +200,6 @@ export default async function ProductsPage({ searchParams }) {
                     </div>
                 )}
             </section>
-
-            {/* <div className="text-center fs-6 mt-lg-12 mt-7 mb-7">
-                <span><i className="bi bi-arrow-left-circle me-4"></i>1 / 1<i className="bi bi-arrow-right-circle ms-4"></i></span>
-            </div> */}
 
 
             <div className="text-center fs-6 mt-lg-12 mt-7 mb-7">

@@ -2,36 +2,11 @@
 import card from '@/shared/image/card.webp';
 import Image from 'next/image';
 import Link from 'next/link';
+import { pfmCardData } from '@/app/staticData/data';
 
 export default function PerformanceCard() {
 
-    const pfmCardData = [
-        {
-            id: 1,
-            title: 'Control Arm',
-            img: card,
-            txt: 'Engineered for precision and durability, our control arms deliver superior handling and stability—keeping your wheels aligned even under extreme performance conditions.',
-            alt: '',
-            link: '/',
-        },
-        {
-            id: 2,
-            title: 'Control Arm',
-            img: card,
-            txt: 'Engineered for precision and durability, our control arms deliver superior handling and stability—keeping your wheels aligned even under extreme performance conditions.',
-            alt: '',
-            link: '/',
 
-        },
-        {
-            id: 3,
-            title: 'Control Arm',
-            img: card,
-            txt: 'Engineered for precision and durability, our control arms deliver superior handling and stability—keeping your wheels aligned even under extreme performance conditions.',
-            alt: '',
-            link: '/',
-        }
-    ];
 
     return (
         <>
