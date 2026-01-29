@@ -16,26 +16,26 @@ export default async function ProductsPage({ searchParams }) {
     const currentPage = Number(searchParams.page) || 1;
 
     // 每頁 12 筆
-    const pageSize = 13;
+    const pageSize = 8;
 
     // 計算偏移（從第幾筆開始）
     const offset = (currentPage - 1) * pageSize;
 
-
-    let countQuery = supabase.from('product_vehicles').select('*', { count: 'exact', head: true });
-    if (searchParams.categoryId) {
-        countQuery = countQuery.eq('products.category_id', searchParams.categoryId);
-        console.log(countQuery)
-    }
-
-    // 讀取總筆數（為了算總頁數）
-    const { count: totalCount } = await countQuery;
-
-    // 總頁數
-    // const totalPages = Math.ceil((totalCount || 0) / pageSize);
-
     let vehicleData = [];
     let totalPages = 0;
+
+    let countQuery = supabase
+        .from('product_vehicles')
+        .select('id', { count: 'exact', head: true });
+
+    if (searchParams.categoryId) {
+        countQuery = countQuery.eq('products.category_id', searchParams.categoryId.trim());
+    }
+
+    const { count: totalCount } = await countQuery;
+
+    totalPages = Math.ceil((totalCount || 0) / pageSize);
+
 
     if (searchParams.categoryId) {
         // 先過濾 products
@@ -56,8 +56,9 @@ export default async function ProductsPage({ searchParams }) {
                     products!product_id (id, ft_number, name, description, image_url, link, category_id)
                 `)
                 .order('brand', { ascending: true })
-                // .range(offset, offset + pageSize - 1)
+                // .range(offset, offset + pageSize - 1) //從第幾筆到第幾筆資料
                 .in('product_id', productIds);
+
 
             const { data, error } = await query;
             if (error) {
@@ -89,6 +90,7 @@ export default async function ProductsPage({ searchParams }) {
         vehicleData = data || [];
     }
 
+    console.log('[原始資料] 讀取到的 product_vehicles 筆數:', vehicleData.length);
 
     // 讀取 categories（badge 用）
     const { data: categories } = await supabase.from('categories').select('id, name');
@@ -117,7 +119,10 @@ export default async function ProductsPage({ searchParams }) {
             model: v.model || '-',
             year: v.year || '-',
         });
+
     });
+
+    console.log('[群組後] 總共產生幾組資料（即卡片數量）:', Object.keys(groupedData).length);
 
     // 轉成陣列，每個 key 就是一張卡片
     const cardsData = Object.values(groupedData).map(group => ({
@@ -125,6 +130,9 @@ export default async function ProductsPage({ searchParams }) {
         brand: group.brand,
         vehicleList: group.vehicleList,
     }));
+
+    console.log('[最終輸出] 傳給 ProductsCard 的 cardsData 筆數:', cardsData.length);
+
     return (
         <>
 
