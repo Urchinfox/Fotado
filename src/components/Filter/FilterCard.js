@@ -14,6 +14,9 @@ export default function FilterCards({ hasFilter }) {
 
     const handleCardClick = (categoryId) => {
         // 點擊後更新 URL 為 ?categoryId=xxx
+        console.log('點擊的 categoryId (原始):', categoryId);
+        console.log('點擊的 categoryId (trim):', categoryId.trim());
+
         router.push(`/products?categoryId=${categoryId}`);
     };
 

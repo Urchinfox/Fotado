@@ -21,41 +21,73 @@ export default async function ProductsPage({ searchParams }) {
     // 計算偏移（從第幾筆開始）
     const offset = (currentPage - 1) * pageSize;
 
-    // 讀取總筆數（為了算總頁數）
-    const { count: totalCount } = await supabase
-        .from('product_vehicles')
-        .select('*', { count: 'exact', head: true });
 
-    // 總頁數
-    const totalPages = Math.ceil((totalCount || 0) / pageSize);
-
-    // 讀取所有 product_vehicles，並 join products
-    const { data: vehicleData, error } = await supabase
-        .from('product_vehicles')
-        .select(`
-        id,
-        brand,
-        model,
-        year,
-        product_id,
-        products!product_id (
-          id,
-          ft_number,
-          name,
-          description,
-          image_url,
-          link,
-          category_id
-        )
-      `)
-        .order('brand', { ascending: true }) // 按品牌排序
-        .range(offset, offset + pageSize - 1);  // ← 這行新增：只取當頁
-
-    if (error) {
-        console.error('讀取車型資料失敗:', error);
-        return <div className="text-center py-12">載入失敗，請稍後再試</div>;
+    let countQuery = supabase.from('product_vehicles').select('*', { count: 'exact', head: true });
+    if (searchParams.categoryId) {
+        countQuery = countQuery.eq('products.category_id', searchParams.categoryId);
+        console.log(countQuery)
     }
 
+    // 讀取總筆數（為了算總頁數）
+    const { count: totalCount } = await countQuery;
+
+    // 總頁數
+    // const totalPages = Math.ceil((totalCount || 0) / pageSize);
+
+    let vehicleData = [];
+    let totalPages = 0;
+
+    if (searchParams.categoryId) {
+        // 先過濾 products
+        let productQuery = supabase.from('products').select('id');
+        productQuery = productQuery.eq('category_id', searchParams.categoryId.trim());
+
+        const { data: filteredProducts } = await productQuery;
+        const productIds = filteredProducts?.map(p => p.id) || [];
+
+        console.log('找到的 productIds:', productIds);
+
+        if (productIds.length > 0) {
+            // 有產品 → 正常查詢
+            let query = supabase
+                .from('product_vehicles')
+                .select(`
+                    id, brand, model, year, product_id,
+                    products!product_id (id, ft_number, name, description, image_url, link, category_id)
+                `)
+                .order('brand', { ascending: true })
+                // .range(offset, offset + pageSize - 1)
+                .in('product_id', productIds);
+
+            const { data, error } = await query;
+            if (error) {
+                console.error('讀取失敗:', error);
+                return <div className="text-center py-12">載入失敗，請稍後再試</div>;
+            }
+            vehicleData = data || [];
+        } else {
+            // 沒有產品 → 直接空資料
+            vehicleData = [];
+            console.log('該 categoryId 無產品，直接返回空資料');
+        }
+    } else {
+        // 無篩選 → 讀全部（你的原有查詢）
+        let query = supabase
+            .from('product_vehicles')
+            .select(`
+                id, brand, model, year, product_id,
+                products!product_id (id, ft_number, name, description, image_url, link, category_id)
+            `)
+            .order('brand', { ascending: true })
+        // .range(offset, offset + pageSize - 1);
+
+        const { data, error } = await query;
+        if (error) {
+            console.error('讀取失敗:', error);
+            return <div className="text-center py-12">載入失敗，請稍後再試</div>;
+        }
+        vehicleData = data || [];
+    }
 
 
     // 讀取 categories（badge 用）
@@ -69,21 +101,21 @@ export default async function ProductsPage({ searchParams }) {
     const groupedData = {};
     vehicleData.forEach(v => {
         const productId = v.product_id;
-        const brand = v.brand;
+        const brand = v.brand || '未知品牌';  // 防 undefined
 
-        const key = `${productId}-${brand}`; // 唯一 key：FT + 品牌
+        const key = `${productId}-${brand}`;
 
         if (!groupedData[key]) {
             groupedData[key] = {
                 product: v.products,
                 brand,
-                vehicleList: [], // 所有車型（給 modal 用）
+                vehicleList: [],
             };
         }
 
         groupedData[key].vehicleList.push({
-            model: v.model,
-            year: v.year,
+            model: v.model || '-',
+            year: v.year || '-',
         });
     });
 
@@ -148,46 +180,7 @@ export default async function ProductsPage({ searchParams }) {
                 </div>
             </div>
 
-            {/* <section className="container">
-                <div className="row row-cols-2 g-4">
-                    {
-                        productsCardData.map((item) => {
-                            return (
-                                <div className="col filterCard" key={item.id}>
-                                    <div className='bg-neutral-90 p-4 rounded-3 h-100'>
 
-                                        <div className="row align-items-center">
-                                            <div className="col-4 d-flex flex-column justify-content-center">
-                                                <div>
-                                                    <Image
-                                                        src={item.img}
-                                                        className="object-fit-cover w-100 img-base rounded-2"
-                                                        width={122}
-                                                        height={122}
-                                                        alt={item.alt}
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            <div className="col-8 text-neutral-30">
-                                                <div className="p-3">
-                                                    <div className="d-flex justify-content-between">
-                                                        <h2 className="fw-light">{item.title}</h2>
-                                                        <Link href={item.link}>
-                                                            <i className="bi bi-arrow-up-right"></i>
-                                                        </Link>
-                                                    </div>
-                                                    <p>{item.txt}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
-            </section> */}
 
             <FilterCards hasFilter={Object.keys(searchParams).length > 0} />
 
@@ -201,8 +194,12 @@ export default async function ProductsPage({ searchParams }) {
                             <ProductsCard cardsData={cardsData} categoryMap={categoryMap} />
                         ) : (
                             <div className="text-center py-12 text-neutral-40">
-                                <p className="fs-4">查無符合條件的產品</p>
-                                <p>請調整篩選條件，或稍後再試</p>
+                                <div className="mb-6">
+                                    <i className="bi bi-search fs-1 text-neutral-60"></i>
+                                </div>
+                                <h3 className="fs-3 fw-light mb-3">目前尚無此類商品</h3>
+                                <p className="fs-5 mb-4">該類別正在積極開發中，敬請期待！</p>
+                                <p className="mb-5">或點擊上方其他類別繼續探索更多產品～</p>
                             </div>
                         )}
                     </section>

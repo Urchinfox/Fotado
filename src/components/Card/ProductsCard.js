@@ -4,12 +4,13 @@ import ProductsModal from '../Modal/ProductsModal';
 
 export default function ProductsCard({ cardsData = [], categoryMap = {} }) {
     if (cardsData.length === 0) return null;
+    console.log(cardsData)
 
     return (
         <div className="container productsCard">
             <div className="row row-cols-lg-4 row-cols-2 gy-4">
-                {cardsData.map((card) => (
-                    <div className="col" key={`${card.id}-${card.brand}`}>
+                {cardsData.map((card, index) => (
+                    <div className="col" key={`${card.id}-${card.brand || 'no-brand'}-${index}`}>
                         <div className="p-2 bg-neutral-90 rounded-2">
                             <div className="text-center mb-3">
                                 <Image
@@ -44,6 +45,7 @@ export default function ProductsCard({ cardsData = [], categoryMap = {} }) {
                                 <div>
                                     <span className="badge text-bg-neutral-60 text-neutral-90 fw-light">
                                         {categoryMap[card.category_id] || '未知分類'}
+
                                     </span>
                                 </div>
                                 <a
