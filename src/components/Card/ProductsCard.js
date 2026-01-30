@@ -35,6 +35,7 @@ export default function ProductsCard({ cardsData = [], categoryMap = {} }) {
                                         data-brand={card.brand}  // 傳品牌給 modal
                                         data-ft-number={card.ft_number}  // 傳編號給 modal
                                         data-name={card.name} //傳品名給 modal
+                                        data-vehicle-list={JSON.stringify(card.vehicle_list)}  // 新增這行
                                     >
                                         View Details <i className="bi bi-three-dots rounded-circle text-neutral-40 border border-neutral-40"></i>
                                     </button>

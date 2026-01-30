@@ -15,122 +15,65 @@ export default async function ProductsPage({ searchParams }) {
     // 讀取 page，從 URL ?page=x 取得，預設 1
     const currentPage = Number(searchParams.page) || 1;
 
-    // 每頁 12 筆
-    const pageSize = 8;
+    // 每頁 8 筆（測試用）
+    const pageSize = 6;
 
-    // 計算偏移（從第幾筆開始）
+    // 計算偏移
     const offset = (currentPage - 1) * pageSize;
 
-    let vehicleData = [];
-    let totalPages = 0;
+    let cardsData = [];  // 外層宣告 cardsData
 
-    let countQuery = supabase
-        .from('product_vehicles')
-        .select('id', { count: 'exact', head: true });
-
-    if (searchParams.categoryId) {
-        countQuery = countQuery.eq('products.category_id', searchParams.categoryId.trim());
-    }
-
-    const { count: totalCount } = await countQuery;
-
-    totalPages = Math.ceil((totalCount || 0) / pageSize);
-
-
-    if (searchParams.categoryId) {
-        // 先過濾 products
-        let productQuery = supabase.from('products').select('id');
-        productQuery = productQuery.eq('category_id', searchParams.categoryId.trim());
-
-        const { data: filteredProducts } = await productQuery;
-        const productIds = filteredProducts?.map(p => p.id) || [];
-
-        console.log('找到的 productIds:', productIds);
-
-        if (productIds.length > 0) {
-            // 有產品 → 正常查詢
-            let query = supabase
-                .from('product_vehicles')
-                .select(`
-                    id, brand, model, year, product_id,
-                    products!product_id (id, ft_number, name, description, image_url, link, category_id)
-                `)
-                .order('brand', { ascending: true })
-                // .range(offset, offset + pageSize - 1) //從第幾筆到第幾筆資料
-                .in('product_id', productIds);
-
-
-            const { data, error } = await query;
-            if (error) {
-                console.error('讀取失敗:', error);
-                return <div className="text-center py-12">載入失敗，請稍後再試</div>;
-            }
-            vehicleData = data || [];
-        } else {
-            // 沒有產品 → 直接空資料
-            vehicleData = [];
-            console.log('該 categoryId 無產品，直接返回空資料');
-        }
-    } else {
-        // 無篩選 → 讀全部（你的原有查詢）
-        let query = supabase
-            .from('product_vehicles')
-            .select(`
-                id, brand, model, year, product_id,
-                products!product_id (id, ft_number, name, description, image_url, link, category_id)
-            `)
-            .order('brand', { ascending: true })
-        // .range(offset, offset + pageSize - 1);
-
-        const { data, error } = await query;
-        if (error) {
-            console.error('讀取失敗:', error);
-            return <div className="text-center py-12">載入失敗，請稍後再試</div>;
-        }
-        vehicleData = data || [];
-    }
-
-    console.log('[原始資料] 讀取到的 product_vehicles 筆數:', vehicleData.length);
-
-    // 讀取 categories（badge 用）
+    // 讀取 categories（badge 用） - 這段一定要保留
     const { data: categories } = await supabase.from('categories').select('id, name');
     const categoryMap = {};
     categories?.forEach(cat => {
         categoryMap[cat.id] = cat.name;
     });
 
-    // 按 product_id + brand 群組（同一 FT 不同品牌拆卡片）
-    const groupedData = {};
-    vehicleData.forEach(v => {
-        const productId = v.product_id;
-        const brand = v.brand || '未知品牌';  // 防 undefined
+    // 總筆數（用視圖算卡片數量）
+    let countQuery = supabase
+        .from('product_cards_view')
+        .select('*', { count: 'exact', head: true });  // 用 * 避免欄位不存在的問題
 
-        const key = `${productId}-${brand}`;
+    if (searchParams.categoryId) {
+        countQuery = countQuery.eq('category_id', searchParams.categoryId.trim());
+    }
 
-        if (!groupedData[key]) {
-            groupedData[key] = {
-                product: v.products,
-                brand,
-                vehicleList: [],
-            };
-        }
+    const { count: totalCount } = await countQuery;
 
-        groupedData[key].vehicleList.push({
-            model: v.model || '-',
-            year: v.year || '-',
-        });
+    const totalPages = Math.ceil((totalCount || 0) / pageSize);
 
-    });
+    // 查詢當頁卡片
+    let query = supabase
+        .from('product_cards_view')
+        .select(`
+         product_id,
+         brand,
+         ft_number,
+         name,
+         description,
+         image_url,
+         link,
+         category_id,
+         vehicle_list
+     `)
+        .order('brand', { ascending: true })
+        .range(offset, offset + pageSize - 1);
 
-    console.log('[群組後] 總共產生幾組資料（即卡片數量）:', Object.keys(groupedData).length);
+    if (searchParams.categoryId) {
+        query = query.eq('category_id', searchParams.categoryId.trim());
+    }
 
-    // 轉成陣列，每個 key 就是一張卡片
-    const cardsData = Object.values(groupedData).map(group => ({
-        ...group.product,
-        brand: group.brand,
-        vehicleList: group.vehicleList,
-    }));
+    const { data, error } = await query;
 
+    if (error) {
+        console.error('讀取視圖失敗:', error);
+        return <div className="text-center py-12">載入失敗，請稍後再試</div>;
+    }
+
+    cardsData = data || [];
+
+    console.log('[視圖查詢] 當頁卡片筆數:', cardsData.length);
     console.log('[最終輸出] 傳給 ProductsCard 的 cardsData 筆數:', cardsData.length);
 
     return (
@@ -195,7 +138,6 @@ export default async function ProductsPage({ searchParams }) {
 
             {/* 判斷是否有篩選條件 */}
             {Object.keys(searchParams).length > 0 ? (
-                // 有篩選條件 → 顯示產品列表 + 分頁
                 <>
                     <section>
                         {cardsData.length > 0 ? (
@@ -217,7 +159,6 @@ export default async function ProductsPage({ searchParams }) {
                     </div>
                 </>
             ) : (
-                // 無篩選條件 → 只顯示提示
                 <div className="text-center py-12 text-neutral-40">
                     <p className="fs-4">請從上方選擇類別開始瀏覽</p>
                     <p>點擊篩選卡片或使用上方篩選條，即可查看產品</p>

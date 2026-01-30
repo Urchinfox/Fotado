@@ -63,18 +63,29 @@ export default function ProductsModal() {
     const [ftNumber, setFtNumber] = useState(null);
     const [name, setName] = useState(null);
 
-    // 監聽 modal 開啟事件
     useEffect(() => {
         const modal = document.getElementById('productModal');
 
         const handleShow = (event) => {
             const button = event.relatedTarget;
-            // const id = button.getAttribute('data-product-id');
-            // const selectedBrand = button.getAttribute('data-brand');
             setProductId(button.getAttribute('data-product-id'));
             setBrand(button.getAttribute('data-brand'));
             setFtNumber(button.getAttribute('data-ft-number'));
             setName(button.getAttribute('data-name'));
+
+            // 直接從 data-vehicle-list 讀取車型資料（不再查 Supabase）
+            const vehicleListStr = button.getAttribute('data-vehicle-list');
+            if (vehicleListStr) {
+                try {
+                    const vehicleList = JSON.parse(vehicleListStr);
+                    setVehicles(vehicleList || []);
+                } catch (e) {
+                    console.error('解析 vehicle_list 失敗:', e);
+                    setVehicles([]);
+                }
+            } else {
+                setVehicles([]);
+            }
         };
 
         modal.addEventListener('show.bs.modal', handleShow);
@@ -83,34 +94,6 @@ export default function ProductsModal() {
             modal.removeEventListener('show.bs.modal', handleShow);
         };
     }, []);
-
-    // 當 productId + brand 改變時，讀取該品牌的所有車型
-    useEffect(() => {
-        if (!productId || !brand) return;
-
-        const fetchVehicles = async () => {
-            setLoading(true);
-            setError(null);
-            setVehicles([]);
-
-            const { data, error } = await supabase
-                .from('product_vehicles')
-                .select('model, year')
-                .eq('product_id', productId)
-                .eq('brand', brand)  // 只取該品牌
-                .order('model', { ascending: true });
-
-            if (error) {
-                setError('載入車型失敗，請稍後再試');
-                console.error(error);
-            } else {
-                setVehicles(data || []);
-            }
-            setLoading(false);
-        };
-
-        fetchVehicles();
-    }, [productId, brand]);
 
     return (
         <div className="modal fade" id="productModal" tabIndex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
