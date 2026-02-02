@@ -16,3 +16,11 @@
         border-radius: 32px 32px 0 0;
     }
 }
+
+.bannerFilterBar {
+    // position-absolute start-50 translate-middle-x bottom-0
+    position: absolute;
+    left: 50%;
+    bottom: 10%;
+    transform: translateX(-50%);
+}

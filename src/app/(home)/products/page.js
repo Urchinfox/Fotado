@@ -3,20 +3,74 @@ import { createClient } from '@/lib/supabase-server';
 import ProductsCard from '@/components/Card/ProductsCard';
 import Pagination from '@/components/Pagination/Pagination';
 import FilterCards from '@/components/Filter/FilterCard';
+import FilterBar from '@/components/Filter/FilterBar';
 
 
 
 export default async function ProductsPage({ searchParams }) {
 
-
-
     const supabase = createClient();
+    // 1. 大分類（parent_id IS NULL）
+    const { data: systems } = await supabase
+        .from('categories')
+        .select('id, name')
+        .is('parent_id', null)
+        .order('name', { ascending: true });
+
+    // 2. 小分類（帶 parent_id）
+    const { data: allParts } = await supabase
+        .from('categories')
+        .select('id, name, parent_id')
+        .not('parent_id', 'is', null)
+        .order('name', { ascending: true });
+
+    // 3. 品牌 + 小分類關聯（product_vehicles + join products）
+    const { data: makePartRelations } = await supabase
+        .from('product_vehicles')
+        .select(`
+    brand,
+    products!product_id (category_id)
+  `)
+        .not('brand', 'is', null);
+
+    // 去重 + 關聯整理
+    const makeToParts = {};
+    makePartRelations?.forEach(item => {
+        const brand = item.brand;
+        const categoryId = item.products?.category_id;
+        if (brand && categoryId) {
+            if (!makeToParts[brand]) makeToParts[brand] = new Set();
+            makeToParts[brand].add(categoryId);
+        }
+    });
+
+    // 4. 品牌 + 車型關聯
+    const { data: modelMakeRelations } = await supabase
+        .from('product_vehicles')
+        .select('brand, model')
+        .not('model', 'is', null);
+
+    // 整理 brand -> models
+    const makeToModels = {};
+    modelMakeRelations?.forEach(item => {
+        const brand = item.brand;
+        const model = item.model;
+        if (brand && model) {
+            if (!makeToModels[brand]) makeToModels[brand] = new Set();
+            makeToModels[brand].add(model);
+        }
+    });
+
+    const uniqueMakes = [...new Set(modelMakeRelations?.map(m => m.brand.trim()) || [])].sort();
+
+
+    //pagination----------------------------------------
 
     // 讀取 page，從 URL ?page=x 取得，預設 1
     const currentPage = Number(searchParams.page) || 1;
 
     // 每頁 8 筆（測試用）
-    const pageSize = 6;
+    const pageSize = 8;
 
     // 計算偏移
     const offset = (currentPage - 1) * pageSize;
@@ -38,10 +92,25 @@ export default async function ProductsPage({ searchParams }) {
     if (searchParams.categoryId) {
         countQuery = countQuery.eq('category_id', searchParams.categoryId.trim());
     }
+    // 所有可能的過濾條件
+    if (searchParams.part) {
+        countQuery = countQuery.eq('category_id', searchParams.part);
+    }
+    if (searchParams.make) {
+        countQuery = countQuery.eq('brand', searchParams.make);
+    }
+    if (searchParams.ft) {
+        countQuery = countQuery.ilike('ft_number', `%${searchParams.ft}%`);
+    }
+    // model 之後再加（因為在 vehicle_list JSON 裡，需要額外處理）
 
     const { count: totalCount } = await countQuery;
 
     const totalPages = Math.ceil((totalCount || 0) / pageSize);
+
+
+
+    //productsCard --------------------
 
     // 查詢當頁卡片
     let query = supabase
@@ -64,6 +133,19 @@ export default async function ProductsPage({ searchParams }) {
         query = query.eq('category_id', searchParams.categoryId.trim());
     }
 
+    if (searchParams.part) {
+        query = query.eq('category_id', searchParams.part);
+    }
+    if (searchParams.ft) {
+        query = query.ilike('ft_number', `%${searchParams.ft}%`);
+    }
+    if (searchParams.make) {
+        query = query.eq('brand', searchParams.make);
+    }
+    if (searchParams.model) {
+        // model 在 vehicle_list JSON 裡，之後再處理（先做基本過濾）
+    }
+
     const { data, error } = await query;
 
     if (error) {
@@ -79,57 +161,17 @@ export default async function ProductsPage({ searchParams }) {
     return (
         <>
 
-            <div className='d-flex align-items-center my-12 container'>
-                {/* ... 你原本的篩選區程式碼 ... */}
-                {/* 先保持靜態，之後再動態 */}
-                <div className='d-none d-lg-block me-2'>
-                    <button className="border py-1 px-3 rounded-pill bg-white border-neutral-40" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i className="bi bi-chevron-down pe-1"></i>
-                        SYSTEM
-                    </button>
-                    <ul className="dropdown-menu">
-                        <li><a className="dropdown-item" href="#">Suspension</a></li>
-                    </ul>
-                </div>
-                {/* 其他下拉保持原樣 */}
-                <div className='d-none d-lg-block me-2'>
-                    <button className="bg-white border-neutral-40 border py-1 px-3 rounded-pill" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i className="bi bi-chevron-down pe-1"></i>
-                        PART
-                    </button>
-                    <ul className="dropdown-menu">
-                        <li><a className="dropdown-item" href="#">Control Arm</a></li>
-                    </ul>
-                </div>
-                <div className='d-none d-lg-block me-2'>
-                    <button className="bg-white border-neutral-40 border py-1 px-3 rounded-pill" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i className="bi bi-chevron-down pe-1"></i>
-                        MAKE
-                    </button>
-                    <ul className="dropdown-menu">
-                        <li><a className="dropdown-item" href="#">Toyota</a></li>
-                    </ul>
-                </div>
-                <div className='d-none d-lg-block me-2'>
-                    <button className="bg-white border-neutral-40 border py-1 px-3 rounded-pill" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i className="bi bi-chevron-down pe-1"></i>
-                        MODEL
-                    </button>
-                    <ul className="dropdown-menu">
-                        <li><a className="dropdown-item" href="#">RAV4</a></li>
-                    </ul>
-                </div>
+            <div className='my-12 container'>
+                <FilterBar
+                    systems={systems || []}
+                    allParts={allParts || []}
+                    uniqueMakes={uniqueMakes}
+                    makeToParts={makeToParts}      // brand -> Set of category_id
+                    makeToModels={makeToModels}    // brand -> Set of model
+                />
 
-                <div className="position-relative me-2">
-                    <input type="text" className="ps-6 py-1 rounded-pill bg-white border-neutral-40 border " placeholder='OEM or FT NO.' />
-                    <i className="text-dark bi bi-search position-absolute top-50 start-0 translate-middle-y px-1"></i>
-                </div>
-                <div className="d-block d-lg-none me-2"><i className="fs-5 bi bi-funnel"></i></div>
-
-                <div>
-                    <button type='button' className='border-0 rounded-2 bg-neutral-90 text-light py-2 px-3'><i className="bi bi-search"></i> Search</button>
-                </div>
             </div>
+
 
 
 

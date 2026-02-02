@@ -27,7 +27,9 @@ export default async function Home() {
             className="home-banner"
           />
 
-          <FilterBar />
+          <div className='bannerFilterBar'>
+            <FilterBar />
+          </div>
         </div>
       </div>
     </section>

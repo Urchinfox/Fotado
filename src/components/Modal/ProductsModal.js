@@ -1,53 +1,5 @@
 // {/* css in card.scss */ }
 
-
-// export default function ProductsModal() {
-//     return (<>
-//         <div className="modal fade" id="productModal" >
-//             <div className="modal-dialog">
-//                 <div className=" py-6 px-8 glass-modal">
-//                     <div className="justify-content-between d-flex mb-12">
-//                         <div>
-//                             <span className="badge text-bg-neutral-80 text-neutral-30 fw-light me-3">
-//                                 FT-37A001
-//                             </span>
-//                             <span className="badge text-bg-neutral-80 text-neutral-30 fw-light me-3">
-//                                 Tesla
-//                             </span>
-//                             <span className="badge text-bg-neutral-80 text-neutral-30 fw-light">
-//                                 Control Arm
-//                             </span>
-
-//                         </div>
-//                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-//                     </div>
-//                     <div className="modal-body mb-13">
-//                         <table className="table table-bordered border-neutral-80 table-dark table-striped">
-//                             <thead>
-//                                 <tr>
-//                                     <th>Model</th>
-//                                     <th>Year</th>
-//                                 </tr>
-//                             </thead>
-//                             <tbody>
-//                                 <tr>
-//                                     <td>Camry</td>
-//                                     <td>2018–2022</td>
-//                                 </tr>
-//                             </tbody>
-//                         </table>
-//                     </div>
-
-//                 </div>
-//             </div>
-//         </div>
-
-
-
-//     </>)
-// }
-
-
 // src/components/Modal/ProductsModal.jsx
 'use client';
 
@@ -73,7 +25,7 @@ export default function ProductsModal() {
             setFtNumber(button.getAttribute('data-ft-number'));
             setName(button.getAttribute('data-name'));
 
-            // 直接從 data-vehicle-list 讀取車型資料（不再查 Supabase）
+            // 直接從 data-vehicle-list 讀取車型資料
             const vehicleListStr = button.getAttribute('data-vehicle-list');
             if (vehicleListStr) {
                 try {
