@@ -5,22 +5,42 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { productsCardData } from '@/app/staticData/data';
+import { useState, useEffect, useTransition } from 'react';
+import { useSearchParams } from 'next/navigation';
+import Loading from '../Loading/Loading';
 
 export default function FilterCards({ hasFilter }) {
     const router = useRouter();
-
-    // 如果已經有篩選條件，隱藏整個區塊
-    if (hasFilter) return null;
+    const [loading, setLoading] = useState(false);
+    const searchParams = useSearchParams();
+    const [isPending, startTransition] = useTransition();
 
     const handleCardClick = (categoryId) => {
         // 點擊後更新 URL 為 ?categoryId=xxx
         console.log('點擊的 categoryId (原始):', categoryId);
         console.log('點擊的 categoryId (trim):', categoryId.trim());
 
-        router.push(`/products?categoryId=${categoryId}`);
+
+        startTransition(() => {
+            router.push(`/products?categoryId=${categoryId}`);
+        })
+
+        setLoading(true);
+
     };
 
-    return (
+
+    useEffect(() => {
+        if (!isPending && loading) {
+            setLoading(false);
+        }
+    }, [isPending, loading]);
+
+    // 如果已經有篩選條件，隱藏整個區塊
+    if (hasFilter) return null;
+
+
+    return (<>
         <section className="container">
             <div className="row row-cols-2 g-4">
                 {productsCardData.map((item) => (
@@ -57,7 +77,11 @@ export default function FilterCards({ hasFilter }) {
                         </div>
                     </div>
                 ))}
+
+
             </div>
         </section>
-    );
+        {loading && <Loading />}
+
+    </>);
 }

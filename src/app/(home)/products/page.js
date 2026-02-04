@@ -75,7 +75,7 @@ export default async function ProductsPage({ searchParams }) {
     // 計算偏移
     const offset = (currentPage - 1) * pageSize;
 
-    let cardsData = [];  // 外層宣告 cardsData
+    let cardsData = [];
 
     // 讀取 categories（badge 用） - 這段一定要保留
     const { data: categories } = await supabase.from('categories').select('id, name');
@@ -160,7 +160,6 @@ export default async function ProductsPage({ searchParams }) {
 
     return (
         <>
-
             <div className='my-12 container'>
                 <FilterBar
                     systems={systems || []}

@@ -1,18 +1,25 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useState, useMemo, useTransition, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import Loading from '../Loading/Loading';
 
 export default function FilterBar({ systems = [], allParts = [], uniqueMakes = [], makeToParts = {}, makeToModels = {}, hasFilter }) {
 
     const router = useRouter();
+    const [isPending, startTransition] = useTransition();
+    const [loading, setLoading] = useState(false);
     const searchParams = useSearchParams();
+
+    //state
 
     const [selectedSystem, setSelectedSystem] = useState(null);
     const [selectedPart, setSelectedPart] = useState(null);
     const [selectedMake, setSelectedMake] = useState(null);
     const [selectedModel, setSelectedModel] = useState(null);
     const [ftNumber, setFtNumber] = useState('');
+
 
     // 動態過濾 PART（根據 SYSTEM）
     const filteredParts = useMemo(() => {
@@ -46,21 +53,60 @@ export default function FilterBar({ systems = [], allParts = [], uniqueMakes = [
     // 按 Search 更新 URL
     const handleSearch = () => {
         const params = new URLSearchParams();
+        setLoading(true);
 
-        if (selectedSystem) params.set('system', selectedSystem.id);
-        if (selectedPart) params.set('part', selectedPart.id);
-        if (selectedMake) params.set('make', selectedMake);
-        if (selectedModel) params.set('model', selectedModel);
-        if (ftNumber.trim()) params.set('ft', ftNumber.trim());
+        startTransition(() => {
+            if (selectedSystem) params.set('system', selectedSystem.id);
+            if (selectedPart) params.set('part', selectedPart.id);
+            if (selectedMake) params.set('make', selectedMake);
+            if (selectedModel) params.set('model', selectedModel);
+            if (ftNumber.trim()) params.set('ft', ftNumber.trim());
 
-        // 回到第一頁
-        params.delete('page');
+            // 回到第一頁
+            params.delete('page');
 
-        router.push(`/products?${params.toString()}`);
+            router.push(`/products?${params.toString()}`);
 
-        // 清空 FT 輸入框
-        setFtNumber('');
+            // 清空 FT 輸入框
+            setFtNumber('');
+
+        })
+
     };
+
+
+    useEffect(() => {
+        // 讀取所有可能參數
+        const partId = searchParams.get('part') || searchParams.get('categoryId');  // 兼容 FilterCard
+        const make = searchParams.get('make');
+        const model = searchParams.get('model');
+        const ft = searchParams.get('ft');
+
+        // 有 part 或 categoryId → 回填 system & part
+        if (partId) {
+            const part = allParts.find(p => p.id === partId);
+            if (part) {
+                setSelectedPart(part);
+                const system = systems.find(s => s.id === part.parent_id);
+                if (system) setSelectedSystem(system);
+            }
+        } else {
+            // URL 完全沒 part/categoryId → 清空 system & part
+            setSelectedPart(null);
+            setSelectedSystem(null);
+        }
+
+        // 其他欄位回填或清空
+        setSelectedMake(make || null);
+        setSelectedModel(model || null);
+        setFtNumber(ft || '');
+
+        // 轉場完成後關閉 loading
+        if (!isPending && loading) {
+            setLoading(false);
+        }
+    }, [searchParams, isPending, loading, systems, allParts]);
+
 
     return (
         <>
@@ -200,6 +246,8 @@ export default function FilterBar({ systems = [], allParts = [], uniqueMakes = [
                     </div>
                 </div>
             </div>
+
+            {loading && <Loading />}
 
             {/* 手機版保持不變 */}
             {/* ... */}
