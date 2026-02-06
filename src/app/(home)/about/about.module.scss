@@ -1,0 +1,93 @@
+@use '../../../shared/mixins' as *;
+
+
+
+.imgGrayscale {
+    filter: grayscale(100%);
+    transition: filter 0.3s ease;
+
+    @include mobile {
+        min-height: 432px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+}
+
+.about {
+    @include mobile {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+.imgGrayscale:hover {
+    filter: grayscale(0%);
+}
+
+
+.certification {
+    width: 100%;
+
+    &-container {
+        max-width: 776px;
+        margin: 0 auto;
+        // padding: 0 24px; 
+    }
+
+    &-content {
+        display: flex;
+        gap: 50px;
+
+        @include mobile {
+            display: block;
+            padding: 0 10% 0 10%;
+
+        }
+    }
+
+    &-image {
+        flex: 0 0 auto;
+    }
+
+    &-text {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        margin-top: auto;
+
+    }
+
+}
+
+
+.timeline {
+    margin-top: -30px;
+    z-index: 10;
+    position: relative;
+
+    &-yr {
+        font-size: 40px;
+        position: relative;
+        // font-style: Manrope; //pending to import google font
+
+    }
+
+    &-yr::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: -7px;
+        width: 100px;
+        height: 1px;
+        background-color: white;
+    }
+
+    &-title {
+        font-size: 14px;
+    }
+
+    &-txt {
+        font-size: 12px;
+    }
+}

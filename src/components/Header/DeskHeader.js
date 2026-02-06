@@ -37,6 +37,9 @@ function DeskHeader() {
                         <li className="me-6">
                             <Link className="txt-hover a-text" href='/blog'>Blog</Link>
                         </li>
+                        <li className="me-6">
+                            <Link className="txt-hover a-text" href='/about'>About</Link>
+                        </li>
                         <li>
                             <Link className="txt-hover a-text" href='/contact'>Contact</Link>
                         </li>

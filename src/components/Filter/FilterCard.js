@@ -17,8 +17,8 @@ export default function FilterCards({ hasFilter }) {
 
     const handleCardClick = (categoryId) => {
         // 點擊後更新 URL 為 ?categoryId=xxx
-        console.log('點擊的 categoryId (原始):', categoryId);
-        console.log('點擊的 categoryId (trim):', categoryId.trim());
+        // console.log('點擊的 categoryId (原始):', categoryId);
+        // console.log('點擊的 categoryId (trim):', categoryId.trim());
 
 
         startTransition(() => {
@@ -42,7 +42,7 @@ export default function FilterCards({ hasFilter }) {
 
     return (<>
         <section className="container">
-            <div className="row row-lg-cols-2 row-cols-1 g-4">
+            <div className="row row-cols-lg-2 row-cols-1 g-4">
                 {productsCardData.map((item) => (
                     <div className="col filterCard" key={item.id}>
                         <div

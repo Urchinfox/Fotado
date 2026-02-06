@@ -77,7 +77,7 @@ export default async function ProductsPage({ searchParams }) {
 
     let cardsData = [];
 
-    // 讀取 categories（badge 用） - 這段一定要保留
+    // 讀取 categories（badge 用）
     const { data: categories } = await supabase.from('categories').select('id, name');
     const categoryMap = {};
     categories?.forEach(cat => {
@@ -155,8 +155,8 @@ export default async function ProductsPage({ searchParams }) {
 
     cardsData = data || [];
 
-    console.log('[視圖查詢] 當頁卡片筆數:', cardsData.length);
-    console.log('[最終輸出] 傳給 ProductsCard 的 cardsData 筆數:', cardsData.length);
+    // console.log('[視圖查詢] 當頁卡片筆數:', cardsData.length);
+    // console.log('[最終輸出] 傳給 ProductsCard 的 cardsData 筆數:', cardsData.length);
 
     return (
         <>
@@ -169,8 +169,6 @@ export default async function ProductsPage({ searchParams }) {
                     makeToModels={makeToModels}    // brand -> Set of model
                 />
             </div>
-
-
 
 
             <FilterCards hasFilter={Object.keys(searchParams).length > 0} />

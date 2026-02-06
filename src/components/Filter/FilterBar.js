@@ -240,7 +240,7 @@ export default function FilterBar({ systems = [], allParts = [], uniqueMakes = [
                         </button>
                     </div>
 
-                    {/* Search 按鈕 - 有條件才 enable */}
+                    {/* Search 按鈕 */}
                     <div>
                         <button
                             type='button'
