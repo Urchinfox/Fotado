@@ -4,6 +4,7 @@ import { useState, useMemo, useTransition, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import Loading from '../Loading/Loading';
+import FilterModal from '../Modal/FilterModal';
 
 export default function FilterBar({ systems = [], allParts = [], uniqueMakes = [], makeToParts = {}, makeToModels = {}, hasFilter }) {
 
@@ -110,11 +111,11 @@ export default function FilterBar({ systems = [], allParts = [], uniqueMakes = [
 
     return (
         <>
-            <div className="filterBar px-8 py-8 d-lg-block d-none text-white">
+            <div className="container filterBar p-lg-8 p-4 text-white">
                 <p>Find Your Parts</p>
                 <div className='d-flex align-items-center'>
                     {/* SYSTEM */}
-                    <div className='me-2'>
+                    <div className='me-2 d-lg-block d-none'>
                         <button className="border-0 py-1 px-3 rounded-pill" type="button" data-bs-toggle="dropdown">
                             <i className="bi bi-chevron-down pe-1"></i>
                             {selectedSystem ? selectedSystem.name : 'SYSTEM'}
@@ -140,7 +141,7 @@ export default function FilterBar({ systems = [], allParts = [], uniqueMakes = [
                     </div>
 
                     {/* PART */}
-                    <div className='me-2'>
+                    <div className='me-2 d-lg-block d-none'>
                         <button className="border-0 py-1 px-3 rounded-pill" type="button" data-bs-toggle="dropdown">
                             <i className="bi bi-chevron-down pe-1"></i>
                             {selectedPart ? selectedPart.name : 'PART'}
@@ -169,7 +170,7 @@ export default function FilterBar({ systems = [], allParts = [], uniqueMakes = [
                     </div>
 
                     {/* MAKE */}
-                    <div className='me-2'>
+                    <div className='me-2 d-lg-block d-none'>
                         <button className="border-0 py-1 px-3 rounded-pill" type="button" data-bs-toggle="dropdown">
                             <i className="bi bi-chevron-down pe-1"></i>
                             {selectedMake || 'MAKE'}
@@ -197,7 +198,7 @@ export default function FilterBar({ systems = [], allParts = [], uniqueMakes = [
                     </div>
 
                     {/* MODEL */}
-                    <div className='me-2'>
+                    <div className='me-2 d-lg-block d-none'>
                         <button className="border-0 py-1 px-3 rounded-pill" type="button" data-bs-toggle="dropdown">
                             <i className="bi bi-chevron-down pe-1"></i>
                             {selectedModel || 'MODEL'}
@@ -226,18 +227,24 @@ export default function FilterBar({ systems = [], allParts = [], uniqueMakes = [
                         <input
                             type="text"
                             className="ps-5 py-1 rounded-pill border-0"
-                            placeholder='OEM or FT NO.'
+                            placeholder='FT NO.'
                             value={ftNumber}
                             onChange={(e) => setFtNumber(e.target.value)}
                         />
                         <i className="text-dark bi bi-search position-absolute top-50 start-0 translate-middle-y px-1"></i>
                     </div>
 
+                    <div className='me-2 d-lg-none d-block'>
+                        <button type='button' className='border-0 bg-transparent p-0' data-bs-toggle="modal" data-bs-target="#filterModal">
+                            <i className="fs-5 bi bi-funnel text-dark"></i>
+                        </button>
+                    </div>
+
                     {/* Search 按鈕 - 有條件才 enable */}
                     <div>
                         <button
                             type='button'
-                            className={`border-0 rounded-pill py-2 px-4 ${hasAnyFilter ? 'bg-neutral-90 text-light' : 'bg-neutral-70 text-neutral-40'}`}
+                            className={`border-0 rounded-pill py-2 px-lg-4 px-1 ${hasAnyFilter ? 'bg-neutral-90 text-light' : 'bg-neutral-70 text-neutral-40'}`}
                             disabled={!hasAnyFilter}
                             onClick={handleSearch}
                         >
@@ -246,11 +253,25 @@ export default function FilterBar({ systems = [], allParts = [], uniqueMakes = [
                     </div>
                 </div>
             </div>
-
+            <FilterModal
+                systems={systems}
+                selectedSystem={selectedSystem}
+                setSelectedSystem={setSelectedSystem}
+                selectedPart={selectedPart}
+                setSelectedPart={setSelectedPart}
+                selectedMake={selectedMake}
+                setSelectedMake={setSelectedMake}
+                selectedModel={selectedModel}
+                setSelectedModel={setSelectedModel}
+                ftNumber={ftNumber}
+                setFtNumber={setFtNumber}
+                filteredParts={filteredParts}
+                filteredMakes={filteredMakes}
+                filteredModels={filteredModels}
+                handleSearch={handleSearch}
+                hasAnyFilter={hasAnyFilter}
+            />
             {loading && <Loading />}
-
-            {/* 手機版保持不變 */}
-            {/* ... */}
         </>
     );
 }

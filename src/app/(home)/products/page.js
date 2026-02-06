@@ -168,7 +168,6 @@ export default async function ProductsPage({ searchParams }) {
                     makeToParts={makeToParts}      // brand -> Set of category_id
                     makeToModels={makeToModels}    // brand -> Set of model
                 />
-
             </div>
 
 

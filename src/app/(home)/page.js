@@ -27,14 +27,14 @@ export default async function Home() {
             className="home-banner"
           />
 
-          <div className='bannerFilterBar'>
+          <div className='bannerFilterBar '>
             <FilterBar />
           </div>
         </div>
       </div>
     </section>
 
-    <section className='border rounded-3 py-10 bg-white shadow d-block d-lg-none' style={{ marginTop: '-30px', zIndex: '10', position: 'relative' }}>
+    <div className='border rounded-3 py-10 bg-white shadow d-block d-lg-none' style={{ marginTop: '-30px', zIndex: '10', position: 'relative' }}>
       <div className="container">
         <div className='mb-6'>
           <p className='fw-bolder mb-2'>System</p>
@@ -80,7 +80,7 @@ export default async function Home() {
           <button type='button' className='border-0 rounded-pill bg-neutral-90 text-light py-2 px-4'><i className="bi bi-search"></i> Search</button>
         </div>
       </div>
-    </section>
+    </div>
 
 
 

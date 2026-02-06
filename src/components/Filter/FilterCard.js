@@ -42,7 +42,7 @@ export default function FilterCards({ hasFilter }) {
 
     return (<>
         <section className="container">
-            <div className="row row-cols-2 g-4">
+            <div className="row row-lg-cols-2 row-cols-1 g-4">
                 {productsCardData.map((item) => (
                     <div className="col filterCard" key={item.id}>
                         <div
@@ -50,7 +50,7 @@ export default function FilterCards({ hasFilter }) {
                             onClick={() => handleCardClick(item.categoryId)}
                         >
                             <div className="row align-items-center">
-                                <div className="col-4 d-flex flex-column justify-content-center">
+                                <div className="col-lg-4 col-12 d-flex flex-column justify-content-center">
                                     <div>
                                         <Image
                                             src={item.img}
@@ -62,7 +62,7 @@ export default function FilterCards({ hasFilter }) {
                                     </div>
                                 </div>
 
-                                <div className="col-8 text-neutral-30">
+                                <div className="col-lg-8 col-12 text-neutral-30">
                                     <div className="p-3">
                                         <div className="d-flex justify-content-between">
                                             <h2 className="fw-light">{item.title}</h2>
