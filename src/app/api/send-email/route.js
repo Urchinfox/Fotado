@@ -1,11 +1,18 @@
 // app/api/send-email/route.js
 import { Resend } from "resend";
+import axios from "axios";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const ABSTRACT_API_KEY = process.env.ABSTRACT_EMAIL_API_KEY;
+
+
 
 export async function POST(request) {
+
+
   try {
     const body = await request.json();
+    console.log('收到 body:', body);
     const { name, email, phone = '', message } = body;
 
     // 簡單驗證（可加強）
@@ -16,8 +23,29 @@ export async function POST(request) {
       );
     }
 
+
+    //用 Abstract API 驗證 email
+
+    const verifyRes = await axios.get(
+      `https://emailreputation.abstractapi.com/v1/?api_key=${process.env.ABSTRACT_EMAIL_API_KEY}&email=${encodeURIComponent(email)}`
+    );
+
+    console.log('Abstract API 回應:', verifyRes.data);
+
+    const verification = verifyRes.data;
+
+    // 判斷 email 是否有效
+    if (verification.email_deliverability.status !== 'deliverable') {
+      return Response.json(
+        { error: '請輸入有效的 email 地址' },
+        { status: 400 }
+      );
+    }
+    console.log('email 驗證通過，開始寄信');
+
+
     const { data, error } = await resend.emails.send({
-      from: 'Contact Form <onboarding@resend.dev>',  // 先用 Resend 預設，之後可改成你的域名
+      from: 'Contact Form <onboarding@resend.dev>',  // 先用 Resend 預設 之後可改成你的域名
       to: ['carico.auto@gmail.com'],               // 公司email
       subject: `新聯絡表單 - ${name}`,
       html: `
