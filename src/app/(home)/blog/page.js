@@ -1,4 +1,6 @@
 import styles from "./blog.module.scss"
+import BlogCard from "@/components/Card/BlogCard"
+import BlogPage from "@/components/Pagination/BlogPage"
 export default function Blog() {
     return (<>
         <div className="container">
@@ -9,7 +11,7 @@ export default function Blog() {
                             <p className="mb-5">Categories</p>
                             <div>
                                 <span className="bg-neutral-30 d-inline-block me-2 mb-3 py-2 px-3 rounded-pill">all</span>
-                                <span className="bg-neutral-30 d-inline-block me-2 mb-3 py-2 px-3 rounded-pill">Suspension (3)</span>
+                                <span className="bg-dark text-neutral-30 d-inline-block me-2 mb-3 py-2 px-3 rounded-pill">Suspension (3)</span>
                                 <span className="bg-neutral-30 d-inline-block me-2 mb-3 py-2 px-3 rounded-pill">Control Arm (5)</span>
                                 <span className="bg-neutral-30 d-inline-block me-2 mb-3 py-2 px-3 rounded-pill">Shock Absorber (7)</span>
                             </div>
@@ -42,9 +44,15 @@ export default function Blog() {
 
                 </div>
                 <div className="col-9">
-
+                    <div className="row gy-4">
+                        <div className="col-4">
+                            <BlogCard />
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <BlogPage />
         </div>
 
     </>)

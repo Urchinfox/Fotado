@@ -1,7 +1,7 @@
 // src/app/products/page.js
 import { createClient } from '@/lib/supabase-server';
 import ProductsCard from '@/components/Card/ProductsCard';
-import Pagination from '@/components/Pagination/Pagination';
+import ProductPage from '@/components/Pagination/ProductPage';
 import FilterCards from '@/components/Filter/FilterCard';
 import FilterBar from '@/components/Filter/FilterBar';
 
@@ -193,7 +193,7 @@ export default async function ProductsPage({ searchParams }) {
                     </section>
 
                     <div className="text-center fs-6 mt-lg-12 mt-7 mb-7">
-                        <Pagination currentPage={currentPage} totalPages={totalPages} />
+                        <ProductPage currentPage={currentPage} totalPages={totalPages} />
                     </div>
                 </>
             ) : (
