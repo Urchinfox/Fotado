@@ -1,0 +1,11 @@
+// @use '../../../shared/mixins' as *;
+@use '@/shared/mixins' as *;
+
+
+.sideBar {
+    background-color: #fff;
+
+    @include mobile {
+        background-color: blue;
+    }
+}
