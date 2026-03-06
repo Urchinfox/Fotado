@@ -9,10 +9,11 @@ export default function BlogLayout({ children }) {
                 <div className="col-12 col-lg-3">
                     <div className={` rounded-4 py-10 px-6 ${styles.sideBar}`}>
                         {/* Categories */}
-                        <div className="border-bottom pb-lg-8 pb-0 border-neutral-60">
+                        <div className="border-lg-bottom border-0 pb-lg-8 pb-0 border-neutral-60">
                             <p className="mb-5">Categories</p>
                             <div>
                                 <span className="bg-neutral-30 d-inline-block me-2 mb-3 py-2 px-3 rounded-pill">all</span>
+
                                 <span className="bg-dark text-neutral-30 d-inline-block me-2 mb-3 py-2 px-3 rounded-pill">Suspension (3)</span>
                                 <span className="bg-neutral-30 d-inline-block me-2 mb-3 py-2 px-3 rounded-pill">Control Arm (5)</span>
                                 <span className="bg-neutral-30 d-inline-block me-2 mb-3 py-2 px-3 rounded-pill">Shock Absorber (7)</span>

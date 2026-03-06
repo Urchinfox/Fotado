@@ -6,6 +6,6 @@
     background-color: #fff;
 
     @include mobile {
-        background-color: blue;
+        background-color: transparent;
     }
 }

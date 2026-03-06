@@ -12,7 +12,7 @@ const mockPosts = [
         slug: "why-is-my-car-shaking",
         excerpt: "When traveling long distances, the biggest fear is encountering vehicle issues...",
         thumbnail_url: testImg,
-        tags: ["Suspension", "Control Arm"],
+        tags: ["Suspension", "Control Arm", 'lateral link'],
     },
     {
         id: 2,
@@ -38,7 +38,7 @@ export default function Blog() {
         <>
             <div className="row gy-4">
                 {mockPosts.map((post) => (
-                    <div className="col-4" key={post.id}>
+                    <div className="col-lg-4 col-12" key={post.id}>
                         <BlogCard post={post} />
                     </div>
                 ))}

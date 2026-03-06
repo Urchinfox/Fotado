@@ -1,3 +1,16 @@
-.dateTimeTxt {
-    font-size: 12px;
+@use '@/shared/mixins' as *;
+
+.contentImg {
+    width: 200px;
+    height: 380;
+
+    @include mobile {
+        width: 330px;
+        height: 220px;
+    }
+
+}
+
+.test {
+    color: blue;
 }

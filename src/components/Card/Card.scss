@@ -110,3 +110,38 @@ ul.newsCard {
 
 
 // ------------------------------blogCards
+
+.blogCardMb {
+    &-img {
+        border-radius: 15px;
+    }
+}
+
+.blogCard-img {
+    filter: saturate(1.1) contrast(1.05);
+}
+
+.blogCard-glass {
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    z-index: 1;
+
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+
+    background: linear-gradient(to bottom,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(169, 169, 169, 0.615) 100%);
+
+    /* 控制 blur 出現區域 */
+    mask-image: linear-gradient(to bottom,
+            transparent 3.8%,
+            black 50%,
+            black 100%);
+
+    -webkit-mask-image: linear-gradient(to bottom,
+            transparent 3.8%,
+            black 50%,
+            black 100%);
+}

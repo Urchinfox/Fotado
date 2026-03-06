@@ -1,5 +1,5 @@
 // app/blog/[slug]/page.js
-import styles from '../blog.module.scss';;
+import styles from '../blog.module.scss';
 import Image from 'next/image';
 import testImg from '@/shared/image/productSample.webp';
 
@@ -8,22 +8,23 @@ export default function BlogPost({ params }) {
     console.log(params)
     return (<>
         <h1 className='fs-5'>Why Is My Car Shaking? | How to check your car for vibrations</h1>  {/* article title */}
-        <div className='mt-5'>
+        <div className='mt-lg-5 mt-3'>
             <i class="bi bi-calendar-week me-2"></i>
-            <time datetime="" className={`text-neutral-90 fs-8 me-2`}>Apr.24.2025</time>
-            <span className={`text-neutral-60 fs-8 me-2`}>5 min</span>
-            <div className='d-block d-lg-inline'>
+            <time dateTime="" className={`text-neutral-90 fs-8 me-2`}>Apr.24.2025</time>
+            <span className={`text-neutral-60 fs-8 me-2 mb-lg-0`}>5 min</span>
+            <div className='d-block d-lg-inline mt-3'>
                 <span className='me-2 mb-3 py-2 px-3 rounded-pill bg-neutral-30 fs-9'>Suspension</span>
                 <span className={`me-2 mb-3 py-2 px-3 rounded-pill bg-neutral-30 fs-9`} >Control arm</span>
             </div>
         </div>
         <div className='my-5'>
             <Image
-                className='w-100 object-fit-cover rounded-4 overflow-hidden'
+                className={`w-100 object-fit-cover rounded-4 overflow-hidden  ${styles.contentImg}`}
                 src={testImg}
-                alt=''
                 width={800}
                 height={380}
+                alt=''
+
             />
         </div>
         <p>When traveling long distances, the biggest fear is encountering vehicle issues, especially when high-speed driving suddenly causes unexpected vibrations, which can be quite nerve-wracking. There could be many reasons for a vehicle to shake or vibrate while driving. If you encounter a long holiday and find that car service centers are closed or if you can't find a service center on short notice, perform a preliminary self-inspection to avoid underestimating potential dangers.
