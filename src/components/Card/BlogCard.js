@@ -1,17 +1,18 @@
 
-
+'use client';
 // components/Card/BlogCard.jsx
 import Link from "next/link";
 import Image from "next/image";
 import testImg from '@/shared/image/productSample.webp';
 
 export default function BlogCard({ post = {} }) {
+
     return (<>
         <div className="blogCard d-lg-block d-none">
             <div className="position-relative overflow-hidden d-flex d-lg-block">
                 <div>
                     <Image
-                        className="w-100 h-100 rounded-4 object-fit-cover blogCard-img"
+                        className="w-100 h-100 rounded-4 object-fit-cover"
                         src={post.thumbnail_url || testImg} // 用 post 的圖片，沒有的話用預設
                         width={280}
                         height={321}
@@ -21,7 +22,7 @@ export default function BlogCard({ post = {} }) {
 
                 <div className="blogCard-glass"></div>
 
-                <div className="position-absolute start-0 bottom-0 p-3 mb-2" style={{ zIndex: 2 }}>
+                <div className="position-absolute start-0 bottom-0 p-3 mb-2 w-100" style={{ zIndex: 2 }}>
                     <h2 className="fs-8 text-white">{post.title}</h2>
                     <p className="text-white mb-2 fs-9">
                         {post.excerpt || '文章摘要載入中...'} {/* 用 excerpt */}

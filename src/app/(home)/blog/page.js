@@ -1,50 +1,40 @@
-
-// app/blog/page.js
-import BlogCard from '@/components/Card/BlogCard';
+// app/blog/page.js（保持 Server Component，無 'use client'）
+import { createClient } from '@/lib/supabase-server';
 import BlogPage from '@/components/Pagination/BlogPage';
-import testImg from '@/shared/image/productSample.webp';
+import BlogListClient from '@/components/Blog/BlogListClient';
 
-// 假資料（模擬 Supabase 回傳的 posts）
-const mockPosts = [
-    {
-        id: 1,
-        title: "Why Is My Car Shaking?",
-        slug: "why-is-my-car-shaking",
-        excerpt: "When traveling long distances, the biggest fear is encountering vehicle issues...",
-        thumbnail_url: testImg,
-        tags: ["Suspension", "Control Arm", 'lateral link'],
-    },
-    {
-        id: 2,
-        title: "How to Choose Control Arm?",
-        slug: "choose-control-arm",
-        excerpt: "Control arms are key to suspension performance...",
-        thumbnail_url: testImg,
-        tags: ["Control Arm"],
-    },
-    {
-        id: 3,
-        title: "Shock Absorber Maintenance Tips",
-        slug: "shock-absorber-tips",
-        excerpt: "Regular check is important for safety...",
-        thumbnail_url: testImg,
-        tags: ["Shock Absorber"],
-    },
-    // 你可以加到 9 張
-];
+export default async function Blog({ searchParams }) {
+    const supabase = createClient();
 
-export default function Blog() {
+    const tag = searchParams.tag || null;  // 從 URL ?tag=xxx 拿
+    const page = Number(searchParams.page) || 1;
+    const pageSize = 3; // 每頁 3 筆
+    const offset = (page - 1) * pageSize;
+
+    let query = supabase
+        .from('posts')
+        .select('id, title, slug, excerpt, thumbnail_url, tags, created_at, author, reading_time', { count: 'exact' })
+        .order('created_at', { ascending: false })
+        .range(offset, offset + pageSize - 1); // 分頁範圍
+    if (tag) {
+        query = query.contains('tags', [tag]);
+    }
+
+    const { data: posts, error, count } = await query;
+
+    if (error) {
+        console.error('抓文章失敗:', error);
+        return <div>載入文章失敗，請稍後再試</div>;
+    }
+
+    const totalPages = Math.ceil((count || 0) / pageSize);
+
     return (
         <>
-            <div className="row gy-4">
-                {mockPosts.map((post) => (
-                    <div className="col-lg-4 col-12" key={post.id}>
-                        <BlogCard post={post} />
-                    </div>
-                ))}
-            </div>
+            {/* 傳 posts 給 Client Component */}
+            <BlogListClient initialPosts={posts} initialTag={tag} />
 
-            <BlogPage />
+            <BlogPage currentPage={page} totalPages={totalPages} />
         </>
     );
 }
