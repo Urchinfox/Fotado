@@ -4,13 +4,14 @@ import styles from '@/app/(home)/blog/layout.module.scss'
 
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { formatArticleDate } from '../UtilFn/date';
 
-export default function SidebarClient({ allTags }) {
+export default function SidebarClient({ allTags, popularPosts }) {
     const searchParams = useSearchParams();
     const currentTag = searchParams.get('tag');
-
+    console.log(popularPosts)
     return (
-        <div className="bg-white rounded-4 py-10 px-6">
+        <div className="bg-white rounded-4 py-lg-10 px-lg-6 p-0">
             {/* Categories */}
             <div className="border-lg-bottom border-0 pb-lg-8 pb-0 border-neutral-60">
                 <p className="mb-5">Categories</p>
@@ -44,14 +45,29 @@ export default function SidebarClient({ allTags }) {
             <div className="mt-8 d-none d-lg-block">
                 <p className="my-5">Popular posts</p>
                 <div>
-                    {/* 之後會用 Supabase 抓 reading_count 前 3 篇 */}
-                    <div className="mb-5">
-                        <h6>01 Why Is My Car Shaking?</h6>
-                        <div className="ps-6">
-                            <span className="d-block text-neutral-70">Suspension • Control Arm</span>
-                            <span className={`text-neutral-60 ${styles.dateTimeTxt}`}>May 20 | 5 min read</span>
-                        </div>
-                    </div>
+                    {popularPosts.length === 0 ? (
+                        <p className="text-neutral-60">暫無熱門文章</p>
+                    ) : (
+                        popularPosts.map((post, index) => {
+                            return (
+                                <div className="mb-5" key={post.id}>
+                                    <Link href={`/blog/${post.slug}`} className="text-decoration-none">
+                                        <h6 className="text-dark mb-1 fs-7">
+                                            {index + 1}. {post.title}
+                                        </h6>
+                                    </Link>
+                                    <div className="ps-8">
+                                        <span className="d-block text-neutral-70">
+                                            {post.tags?.slice(0, 2).join(' • ') || 'Uncategorized'}
+                                        </span>
+                                        <span className={`text-neutral-60 fs-9 ${styles.dateTimeTxt}`}>
+                                            {formatArticleDate(post, 'en-US', { month: 'short', day: 'numeric' })} | {post.reading_time || 5} min read
+                                        </span>
+                                    </div>
+                                </div>
+                            );
+                        })
+                    )}
                 </div>
             </div>
         </div>

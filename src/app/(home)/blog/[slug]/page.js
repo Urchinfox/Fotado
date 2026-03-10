@@ -4,15 +4,16 @@ import Image from 'next/image';
 import { createClient } from '@/lib/supabase-server';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
+import { formatArticleDate } from '@/components/UtilFn/date';
 
 export default async function BlogPost({ params }) {
 
     const supabase = createClient();
     const { slug } = params;
-
+    // 先抓文章
     const { data: post, error } = await supabase
         .from('posts')
-        .select('id, title, content, thumbnail_url, tags, created_at, author, reading_time, excerpt')
+        .select('id, title, content, thumbnail_url, tags, created_at, author, reading_time, excerpt, updated_at')
         .eq('slug', slug)
         .single();
 
@@ -21,6 +22,9 @@ export default async function BlogPost({ params }) {
         return <div>文章不存在或載入失敗</div>;
     }
 
+    const formattedDate = formatArticleDate(post);
+    const displayDate = post.updated_at || post.created_at;
+
     // 閱讀時間（後端計算或前端計算，這裡先用欄位）
     const readingTime = post.reading_time || 5;
     return (<>
@@ -28,8 +32,8 @@ export default async function BlogPost({ params }) {
 
         <div className="mt-lg-5 mt-3">
             <i className="bi bi-calendar-week me-2"></i>
-            <time dateTime={post.created_at} className="text-neutral-90 fs-8 me-2">
-                {new Date(post.created_at).toLocaleDateString('zh-TW', { year: 'numeric', month: 'short', day: 'numeric' })}
+            <time dateTime={displayDate} className="text-neutral-90 fs-8 me-2">
+                {formattedDate}
             </time>
             <span className="text-neutral-60 fs-8 me-2 mb-lg-0">{readingTime} min</span>
             <div className="d-block d-lg-inline mt-3">

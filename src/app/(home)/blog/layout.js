@@ -1,7 +1,6 @@
 // app/blog/layout.js
 import { createClient } from '@/lib/supabase-server';
-import Link from 'next/link';
-import styles from './layout.module.scss';
+
 import BlogSideBar from '@/components/Blog/BlogSideBar';
 
 export default async function BlogLayout({ children, searchParams }) {
@@ -32,12 +31,25 @@ export default async function BlogLayout({ children, searchParams }) {
         .map(([tag, count]) => ({ tag, count }))
         .sort((a, b) => b.count - a.count);  // 按數量降序
 
+
+
+    // 抓熱門文章（reading_count 最高的前 3 篇）
+    const { data: popularPosts, error: popularError } = await supabase
+        .from('posts')
+        .select('id, title, slug, tags, reading_time,created_at, updated_at')
+        .order('reading_count', { ascending: false })
+        .limit(3);
+
+    if (popularError) {
+        console.error('抓熱門文章失敗:', popularError);
+    }
+
     return (
         <div className="container">
             <div className="row">
                 {/* 左邊 sidebar */}
                 <div className="col-12 col-lg-3">
-                    <BlogSideBar allTags={allTags} />
+                    <BlogSideBar allTags={allTags} popularPosts={popularPosts || []} />
                 </div>
 
                 {/* 右邊內容 */}

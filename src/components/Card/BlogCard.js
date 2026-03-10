@@ -4,9 +4,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import testImg from '@/shared/image/productSample.webp';
+import { useSearchParams } from "next/navigation";
 
 export default function BlogCard({ post = {} }) {
 
+    const searchParams = useSearchParams()
     return (<>
         <div className="blogCard d-lg-block d-none">
             <div className="position-relative overflow-hidden d-flex d-lg-block">
@@ -41,7 +43,9 @@ export default function BlogCard({ post = {} }) {
                     </div>
 
                     {/* 這裡用 post.slug */}
-                    <Link href={`/blog/${post.slug}`} className="bg-neutral-30 rounded-pill py-2 d-block text-center fs-8">
+                    <Link
+                        href={`/blog/${post.slug}${searchParams.size > 0 ? '?' + searchParams.toString() : ''}`}
+                        className="bg-neutral-30 rounded-pill py-2 d-block text-center fs-8">
                         Continue reading →
                     </Link>
                 </div>
@@ -50,7 +54,7 @@ export default function BlogCard({ post = {} }) {
 
 
         <div className="d-block d-lg-none blogCardMb">
-            <Link href={`/blog/${post.slug}`} className="">
+            <Link href={`/blog/${post.slug}${searchParams.size > 0 ? '?' + searchParams.toString() : ''}`}>
 
                 <div className="d-flex ">
                     <div className="me-4">
