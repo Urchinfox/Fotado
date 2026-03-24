@@ -10,6 +10,10 @@
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+.filterBar button {
+    white-space: nowrap;
+}
+
 .glass-btn {
     background: #E6E6E640;
     backdrop-filter: blur(16px);

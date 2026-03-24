@@ -7,13 +7,15 @@ import NewsCard from '@/components/Card/NewsCard';
 import PerformanceCard from '@/components/Card/PerformanceCard';
 import Link from 'next/link';
 import worker from '@/shared/image/worker.webp'
+import { getFilterData } from '@/components/UtilFn/getFilterData';
 
 
 
 
 export default async function Home() {
 
-
+  // FilterBar 需要的資料
+  const filterData = await getFilterData();
   return (<>
     <section className='mt-5'>
       <h1 className="sr-only">Fotado</h1>
@@ -28,13 +30,20 @@ export default async function Home() {
           />
 
           <div className='bannerFilterBar '>
-            <FilterBar />
+            <FilterBar
+              systems={filterData.systems}
+              allParts={filterData.allParts}
+              uniqueMakes={filterData.uniqueMakes}
+              makeToParts={filterData.makeToParts}
+              makeToModels={filterData.makeToModels}
+              type="home"        // 加上這個 prop，未來區分行為用
+            />
           </div>
         </div>
       </div>
     </section>
 
-    <div className='border rounded-3 py-10 bg-white shadow d-block d-lg-none' style={{ marginTop: '-30px', zIndex: '10', position: 'relative' }}>
+    {/* <div className='border rounded-3 py-10 bg-white shadow d-block d-lg-none' style={{ marginTop: '-30px', zIndex: '10', position: 'relative' }}>
       <div className="container">
         <div className='mb-6'>
           <p className='fw-bolder mb-2'>System</p>
@@ -80,7 +89,7 @@ export default async function Home() {
           <button type='button' className='border-0 rounded-pill bg-neutral-90 text-light py-2 px-4'><i className="bi bi-search"></i> Search</button>
         </div>
       </div>
-    </div>
+    </div> */}
 
 
 
@@ -157,7 +166,7 @@ export default async function Home() {
             </div>
             <div className='text-center mt-3'>
 
-              <Link href='/product' className='btn btn-neutral-90'>View All Parts</Link>
+              <Link href='/products' className='btn btn-neutral-90'>View All Parts</Link>
             </div>
           </div>
           <div className="col-lg-6 col-12 mt-lg-0 mt-5">
@@ -197,7 +206,7 @@ export default async function Home() {
                 />
               </div>
               <p className='d-none d-lg-block fs-6 position-absolute start-50 translate-middle-x text-white' style={{ bottom: '25px' }}>Fotado is dedicated to redefining vehicle performance.</p>
-              <Link className='position-absolute bottom-0' href='/' style={{ right: '20px' }}><i className="fs-1 text-white bi bi-arrow-up-right-circle"></i></Link>
+              <Link className='position-absolute bottom-0' href='/about' style={{ right: '20px' }}><i className="fs-1 text-white bi bi-arrow-up-right-circle"></i></Link>
             </div>
 
           </div>

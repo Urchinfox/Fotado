@@ -4,65 +4,15 @@ import ProductsCard from '@/components/Card/ProductsCard';
 import ProductPage from '@/components/Pagination/ProductPage';
 import FilterCards from '@/components/Filter/FilterCard';
 import FilterBar from '@/components/Filter/FilterBar';
+import { getFilterData } from '@/components/UtilFn/getFilterData';
 
 
 
 export default async function ProductsPage({ searchParams }) {
 
     const supabase = createClient();
-    // 1. 大分類（parent_id IS NULL）
-    const { data: systems } = await supabase
-        .from('categories')
-        .select('id, name')
-        .is('parent_id', null)
-        .order('name', { ascending: true });
-
-    // 2. 小分類（帶 parent_id）
-    const { data: allParts } = await supabase
-        .from('categories')
-        .select('id, name, parent_id')
-        .not('parent_id', 'is', null)
-        .order('name', { ascending: true });
-
-    // 3. 品牌 + 小分類關聯（product_vehicles + join products）
-    const { data: makePartRelations } = await supabase
-        .from('product_vehicles')
-        .select(`
-    brand,
-    products!product_id (category_id)
-  `)
-        .not('brand', 'is', null);
-
-    // 去重 + 關聯整理
-    const makeToParts = {};
-    makePartRelations?.forEach(item => {
-        const brand = item.brand;
-        const categoryId = item.products?.category_id;
-        if (brand && categoryId) {
-            if (!makeToParts[brand]) makeToParts[brand] = new Set();
-            makeToParts[brand].add(categoryId);
-        }
-    });
-
-    // 4. 品牌 + 車型關聯
-    const { data: modelMakeRelations } = await supabase
-        .from('product_vehicles')
-        .select('brand, model')
-        .not('model', 'is', null);
-
-    // 整理 brand -> models
-    const makeToModels = {};
-    modelMakeRelations?.forEach(item => {
-        const brand = item.brand;
-        const model = item.model;
-        if (brand && model) {
-            if (!makeToModels[brand]) makeToModels[brand] = new Set();
-            makeToModels[brand].add(model);
-        }
-    });
-
-    const uniqueMakes = [...new Set(modelMakeRelations?.map(m => m.brand.trim()) || [])].sort();
-
+    // 呼叫共用函式取得 FilterBar 需要的資料
+    const filterData = await getFilterData();
 
     //pagination----------------------------------------
 
@@ -160,13 +110,14 @@ export default async function ProductsPage({ searchParams }) {
 
     return (
         <>
+
             <div className='my-12 container'>
                 <FilterBar
-                    systems={systems || []}
-                    allParts={allParts || []}
-                    uniqueMakes={uniqueMakes}
-                    makeToParts={makeToParts}      // brand -> Set of category_id
-                    makeToModels={makeToModels}    // brand -> Set of model
+                    systems={filterData.systems}
+                    allParts={filterData.allParts}
+                    uniqueMakes={filterData.uniqueMakes}
+                    makeToParts={filterData.makeToParts}
+                    makeToModels={filterData.makeToModels}
                 />
             </div>
 

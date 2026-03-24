@@ -116,7 +116,7 @@ export default function FilterBar({ systems = [], allParts = [], uniqueMakes = [
                 <div className='d-flex align-items-center'>
                     {/* SYSTEM */}
                     <div className='me-2 d-lg-block d-none'>
-                        <button className="border-0 py-1 px-3 rounded-pill" type="button" data-bs-toggle="dropdown">
+                        <button className="border-0 py-1 px-2 rounded-pill" type="button" data-bs-toggle="dropdown">
                             <i className="bi bi-chevron-down pe-1"></i>
                             {selectedSystem ? selectedSystem.name : 'SYSTEM'}
                         </button>
@@ -233,7 +233,7 @@ export default function FilterBar({ systems = [], allParts = [], uniqueMakes = [
                         />
                         <i className="text-dark bi bi-search position-absolute top-50 start-0 translate-middle-y px-1"></i>
                     </div>
-
+                    {/* 篩選icon */}
                     <div className='me-2 d-lg-none d-block'>
                         <button type='button' className='border-0 bg-transparent p-0' data-bs-toggle="modal" data-bs-target="#filterModal">
                             <i className="fs-5 bi bi-funnel text-dark"></i>
