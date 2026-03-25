@@ -5,6 +5,7 @@ import FilterBar from '@/components/Filter/FilterBar';
 import card from '@/shared/image/card.webp'
 import NewsCard from '@/components/Card/NewsCard';
 import PerformanceCard from '@/components/Card/PerformanceCard';
+import ShockAbsorber from '@/shared/image/Shock-Absorber.webp'
 import Link from 'next/link';
 import worker from '@/shared/image/worker.webp'
 import { getFilterData } from '@/components/UtilFn/getFilterData';
@@ -97,7 +98,7 @@ export default async function Home() {
       <div className="container">
         <div className="row row-cols-1 row-cols-lg-3 g-4">
 
-          <div className="col d-flex">
+          <div className="col d-flex position-relative">
             <div className="rounded-3 w-100 overflow-hidden flex-fill">
               <Image
                 src={card}
@@ -106,6 +107,10 @@ export default async function Home() {
                 height={160}
                 alt=''
               />
+            </div>
+            <div className='end-50 top-50 position-absolute'>
+              <p className='text-neutral-30 fs-3'>100+</p>
+              <p className='text-neutral-30 fs-6'>SUSPENSION SYSTEM</p>
             </div>
           </div>
 
@@ -131,14 +136,28 @@ export default async function Home() {
             <div
               className="d-flex justify-content-evenly align-items-center rounded-3 flex-fill"
               style={{ backgroundColor: '#D9D9D9' }}>
-              <div>Others</div>
+              <div className='fs-6'>Others</div>
 
               <div className='h-100 d-flex align-items-center'>
                 <Image
                   src={card}
+                  className='rounded-circle object-fit-cover me-2'
+                  width={44}
+                  height={44}
+                  alt=''
+                />
+                <Image
+                  src={card}
+                  className='rounded-circle object-fit-cover me-2'
+                  width={44}
+                  height={44}
+                  alt=''
+                />
+                <Image
+                  src={card}
                   className='rounded-circle object-fit-cover'
-                  width={150}
-                  height={160}
+                  width={44}
+                  height={44}
                   alt=''
                 />
               </div>
@@ -155,10 +174,10 @@ export default async function Home() {
           <div className="col-lg-6 col-12">
             <h2 className='fw-bolder'>Performance Upgrades</h2>
             <p className='mt-5 mb-4'>Enhance your vehicle’s performance with Fotado’s high-quality upgrade parts. Designed for strength and precision, our components deliver superior handling and durability under any driving condition.</p>
-            <div>
+            <div className='text-center'>
               <Image
-                src={card}
-                className='object-fit-cover w-100 h-100 '
+                src={ShockAbsorber}
+                className='object-fit-cover img-base'
                 width={415}
                 height={354}
                 alt=''

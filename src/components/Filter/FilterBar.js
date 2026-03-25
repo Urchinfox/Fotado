@@ -226,7 +226,7 @@ export default function FilterBar({ systems = [], allParts = [], uniqueMakes = [
                     <div className="position-relative me-2">
                         <input
                             type="text"
-                            className="ps-5 py-1 rounded-pill border-0"
+                            className="ps-6 py-1 rounded-pill border-0"
                             placeholder='FT NO.'
                             value={ftNumber}
                             onChange={(e) => setFtNumber(e.target.value)}

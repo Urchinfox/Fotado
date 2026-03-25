@@ -24,3 +24,12 @@
     position: absolute;
     bottom: 10%;
 }
+
+.bi-arrow-up-right-circle {
+    display: block;
+    transition: transform 0.25s ease;
+
+    &:hover {
+        transform: scale(1.2);
+    }
+}

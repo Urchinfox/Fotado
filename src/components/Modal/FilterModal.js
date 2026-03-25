@@ -157,8 +157,8 @@ export default function FilterModal({
                                     <div className="position-relative">
                                         <input
                                             type="text"
-                                            className="form-control ps-5 rounded-pill"
-                                            placeholder='OEM or FT NO.'
+                                            className="form-control ps-7 rounded-pill"
+                                            placeholder='FT NO.'
                                             value={ftNumber}
                                             onChange={(e) => setFtNumber(e.target.value)}
                                         />
