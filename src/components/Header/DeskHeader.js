@@ -2,8 +2,7 @@
 import Link from "next/link";
 import Logo from '../../shared/image/Fotado.png'
 import Image from "next/image";
-// import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-
+import styles from '@/components/Header/header.module.scss'
 function DeskHeader() {
     return (
         <>
@@ -25,23 +24,23 @@ function DeskHeader() {
                 <nav>
                     <ul className="d-flex">
                         <li className="me-6">
-                            <Link href="/products" className="txt-hover a-text">
+                            <Link href="/products" className={`${styles.txtHover} a-text`}>
                                 Product
                             </Link>
                         </li>
 
 
                         <li className="me-6">
-                            <Link className="txt-hover a-text" href='/news'>News</Link>
+                            <Link className={`${styles.txtHover} a-text`} href='/news'>News</Link>
                         </li>
                         <li className="me-6">
-                            <Link className="txt-hover a-text" href='/blog'>Blog</Link>
+                            <Link className={`${styles.txtHover} a-text`} href='/blog'>Blog</Link>
                         </li>
                         <li className="me-6">
-                            <Link className="txt-hover a-text" href='/about'>About</Link>
+                            <Link className={`${styles.txtHover} a-text`} href='/about'>About</Link>
                         </li>
                         <li>
-                            <Link className="txt-hover a-text" href='/contact'>Contact</Link>
+                            <Link className={`${styles.txtHover} a-text`} href='/contact'>Contact</Link>
                         </li>
                     </ul>
 

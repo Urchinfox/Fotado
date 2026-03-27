@@ -1,6 +1,7 @@
 import logo from '@/shared/image/Fotado.png';
 import Image from 'next/image';
 import Link from 'next/link';
+import styles from '@/components/Footer/footer.module.scss'
 
 function Footer() {
     return (
@@ -51,7 +52,7 @@ function Footer() {
                                 <div className="col mb-lg-0 mb-8">
                                     <p className='fs-6 mb-2 fw-bolder'>Products</p>
                                     <h2 className='fs-6 fw-lighter'>Suspension System</h2>
-                                    <ul className='list-deco'>
+                                    <ul className={`${styles.listDeco}`}>
                                         <li>Control Arm</li>
                                         <li>Shock Absorber</li>
                                         <li>Stabilizer Link</li>
@@ -62,7 +63,7 @@ function Footer() {
                                 <div className="col">
                                     <p className='fs-6 mb-2 fw-bolder'>Others</p>
 
-                                    <ul className="footer-list">
+                                    <ul className={`${styles.footerList}`}>
                                         <li><Link href="/news">News</Link></li>
                                         <li><Link href="/catalog">E-Catalog</Link></li>
                                         <li><Link href="/terms">Use & Disclaimer</Link></li>

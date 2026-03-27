@@ -9,7 +9,7 @@ import ShockAbsorber from '@/shared/image/Shock-Absorber.webp'
 import Link from 'next/link';
 import worker from '@/shared/image/worker.webp'
 import { getFilterData } from '@/components/UtilFn/getFilterData';
-
+import styles from '../page.module.scss';
 
 
 
@@ -19,18 +19,18 @@ export default async function Home() {
   const filterData = await getFilterData();
   return (<>
     <section className='mt-5'>
-      <h1 className="sr-only">Fotado</h1>
+      <h1 className={`${styles.srOnly}`}>Fotado - Premium Performance Suspension & Chassis Parts</h1>
 
       <div className=" container-lg px-0 px-lg-3">
-        <div className='position-relative banner-container'>
+        <div className={`position-relative ${styles.bannerContainer}`}>
           <Image
             src={banner}
-            alt=""
+            alt="Fotado high-performance suspension parts - Control arms, shock absorbers,brake disk,stabilizer link,lateral link and chassis upgrades"
             fill
-            className="home-banner"
+            priority
+            className={styles.homeBanner}
           />
-
-          <div className='bannerFilterBar '>
+          <div className={styles.bannerFilterBar}>
             <FilterBar
               systems={filterData.systems}
               allParts={filterData.allParts}
@@ -105,7 +105,7 @@ export default async function Home() {
                 className='object-fit-cover w-100 h-100'
                 width={330}
                 height={160}
-                alt=''
+                alt='SUSPENSION SYSTEM'
               />
             </div>
             <div className='end-50 top-50 position-absolute'>
@@ -124,7 +124,7 @@ export default async function Home() {
                   src={Logo}
                   width={258}
                   height={49}
-                  alt=''
+                  alt='fotado'
                 />
               </div>
               <p className='fs-1'>20+</p>
@@ -180,7 +180,7 @@ export default async function Home() {
                 className='object-fit-cover img-base'
                 width={415}
                 height={354}
-                alt=''
+                alt='shock absorber'
               />
             </div>
             <div className='text-center mt-3'>
@@ -225,7 +225,7 @@ export default async function Home() {
                 />
               </div>
               <p className='d-none d-lg-block fs-6 position-absolute start-50 translate-middle-x text-white' style={{ bottom: '25px' }}>Fotado is dedicated to redefining vehicle performance.</p>
-              <Link className='position-absolute bottom-0' href='/about' style={{ right: '20px' }}><i className="fs-1 text-white bi bi-arrow-up-right-circle"></i></Link>
+              <Link className='position-absolute bottom-0' href='/about' style={{ right: '20px' }}><i className={`fs-1 text-white bi bi-arrow-up-right-circle ${styles.biArrowUpRightCircle}`}></i></Link>
             </div>
 
           </div>

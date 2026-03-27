@@ -1,0 +1,50 @@
+@use '../shared/mixins' as *;
+
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.bannerContainer {
+  max-width: 1300px;
+  width: 100%;
+  height: 539px; // desktop height
+  display: flex;
+  justify-content: center;
+
+  @include mobile {
+    height: 500px; // mobile height
+  }
+}
+
+.homeBanner {
+  object-fit: cover;
+  border-radius: 32px;
+
+  @include mobile {
+    border-radius: 32px 32px 0 0;
+  }
+}
+
+.bannerFilterBar {
+  // position-absolute start-50 translate-middle-x bottom-0
+  position: absolute;
+  bottom: 10%;
+}
+
+.biArrowUpRightCircle {
+  display: block;
+  transition: transform 0.25s ease;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+}

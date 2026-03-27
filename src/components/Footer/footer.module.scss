@@ -1,0 +1,10 @@
+@use '../../shared/mixins' as *;
+
+.listDeco li {
+    list-style: disc;
+}
+
+.footerList {
+    padding-left: 0;
+    margin: 0;
+}

@@ -4,6 +4,7 @@ import news from '@/shared/image/news.webp'
 import news1 from '@/shared/image/news1.webp'
 import news2 from '@/shared/image/news2.webp'
 import Link from 'next/link';
+import styles from '../Card/card.module.scss'
 
 
 export default function NewsCard() {
@@ -44,9 +45,9 @@ export default function NewsCard() {
                 </div>
 
 
-                <ul className="newsCard mt-9 d-flex">
+                <ul className={`${styles.newsCard} mt-9 d-flex`}>
                     {newsData.map((item) => (
-                        <li key={item.id} className="position-relative mx-4 newsCard text-white">
+                        <li key={item.id} className="position-relative mx-4 text-white">
                             <Image
                                 className="rounded-4 w-100 object-fit-cover"
                                 src={item.src}
@@ -55,7 +56,7 @@ export default function NewsCard() {
                                 alt={item.title}
                             />
 
-                            <div className="newsCardContent d-flex justify-content-between align-items-end h-100 p-7 position-absolute top-0 start-0">
+                            <div className={`${styles.newsCardContent} d-flex justify-content-between align-items-end h-100 p-7 position-absolute top-0 start-0`}>
                                 <div>
                                     <p className="mb-2 ">{item.title}</p>
                                     <time dateTime={item.date}>{item.date}</time>

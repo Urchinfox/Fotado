@@ -1,8 +1,8 @@
 'use client'
 import Image from "next/image"
 import Link from "next/link";
-import Logo from '../../shared/image/Fotado.png'
-// import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import Logo from '../../shared/image/Fotado.png';
+import styles from '@/components/Header/header.module.scss';
 
 export default function MobileHeader() {
 
@@ -37,19 +37,19 @@ export default function MobileHeader() {
                             <nav>
                                 <ul className="">
                                     <li className="mb-6">
-                                        <Link href="/" className="txt-hover a-text" onClick={closeMenu}>Home</Link>
+                                        <Link href="/" className={`${styles.txtHover} txt-hover a-text`} onClick={closeMenu}>Home</Link>
                                     </li>
                                     <li className="mb-6">
-                                        <Link href="/products" className="txt-hover a-text" onClick={closeMenu}>Product</Link>
+                                        <Link href="/products" className={`${styles.txtHover} txt-hover a-text`} onClick={closeMenu}>Product</Link>
                                     </li>
                                     <li className="mb-6">
-                                        <Link className="txt-hover a-text" onClick={closeMenu} href='/news'>News</Link>
+                                        <Link className={`${styles.txtHover} txt-hover a-text`} onClick={closeMenu} href='/news'>News</Link>
                                     </li>
                                     <li className="mb-6">
-                                        <Link className="txt-hover a-text" onClick={closeMenu} href='/blog'>Blog</Link>
+                                        <Link className={`${styles.txtHover} txt-hover a-text`} onClick={closeMenu} href='/blog'>Blog</Link>
                                     </li>
                                     <li>
-                                        <Link className="txt-hover a-text" onClick={closeMenu} href='/about'>About us</Link>
+                                        <Link className={`${styles.txtHover} txt-hover a-text`} onClick={closeMenu} href='/about'>About us</Link>
                                     </li>
                                 </ul>
 

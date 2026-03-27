@@ -5,8 +5,16 @@ import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import Loading from '../Loading/Loading';
 import FilterModal from '../Modal/FilterModal';
+import styles from '@/components/Filter/filter.module.scss'
 
-export default function FilterBar({ systems = [], allParts = [], uniqueMakes = [], makeToParts = {}, makeToModels = {}, hasFilter }) {
+export default function FilterBar({
+    systems = [],
+    allParts = [],
+    uniqueMakes = [],
+    makeToParts = {},
+    makeToModels = {},
+    type = "products"   // "home" 或 "products"
+}) {
 
     const router = useRouter();
     const [isPending, startTransition] = useTransition();
@@ -111,7 +119,7 @@ export default function FilterBar({ systems = [], allParts = [], uniqueMakes = [
 
     return (
         <>
-            <div className="container filterBar p-lg-8 p-4 text-white">
+            <div className={`container ${styles.filterBar} p-lg-8 p-4 text-white`} role="search" aria-label="Find your car parts">
                 <p>Find Your Parts</p>
                 <div className='d-flex align-items-center'>
                     {/* SYSTEM */}

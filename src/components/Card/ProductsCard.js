@@ -1,13 +1,14 @@
 // src/components/Card/ProductsCard.jsx
 import Image from 'next/image';
 import ProductsModal from '../Modal/ProductsModal';
+import styles from '@/components/Card/card.module.scss'
 
 export default function ProductsCard({ cardsData = [], categoryMap = {} }) {
     if (cardsData.length === 0) return null;
     console.log(cardsData)
 
     return (
-        <div className="container productsCard">
+        <div className={`container ${styles.productsCard}`}>
             <div className="row row-cols-lg-4 row-cols-2 gy-4">
                 {cardsData.map((card, index) => (
                     <div className="col" key={`${card.id}-${card.brand || 'no-brand'}-${index}`}>

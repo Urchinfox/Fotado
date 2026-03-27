@@ -70,9 +70,8 @@ export default function Contact() {
         }
     };
     return (<>
-        <h1 className="sr-only">Contact Us</h1>
-        <h2 className="text-center mt-lg-13 mb-lg-15 mt-10 mb-10">Get in touch, let us know <br />
-            how we can help</h2>
+        <h1 className="text-center mt-lg-13 mb-lg-15 mt-10 mb-10">Get in touch, let us know <br />
+            how we can help</h1>
 
         <div className="container bg-white rounded-5 p-8">
             <div className="row">

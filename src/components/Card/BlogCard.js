@@ -1,10 +1,10 @@
-
 'use client';
 // components/Card/BlogCard.jsx
 import Link from "next/link";
 import Image from "next/image";
 import testImg from '@/shared/image/productSample.webp';
 import { useSearchParams } from "next/navigation";
+import styles from '@/components/Card/card.module.scss'
 
 export default function BlogCard({ post = {} }) {
 
@@ -22,7 +22,7 @@ export default function BlogCard({ post = {} }) {
                     />
                 </div>
 
-                <div className="blogCard-glass"></div>
+                <div className={`${styles.blogCardGlass}`}></div>
 
                 <div className="position-absolute start-0 bottom-0 p-3 mb-2 w-100" style={{ zIndex: 2 }}>
                     <h2 className="fs-8 text-white">{post.title}</h2>
@@ -53,7 +53,7 @@ export default function BlogCard({ post = {} }) {
         </div>
 
 
-        <div className="d-block d-lg-none blogCardMb">
+        <div className={`d-block d-lg-none ${styles.blogCardMb}`}>
             <Link href={`/blog/${post.slug}${searchParams.size > 0 ? '?' + searchParams.toString() : ''}`}>
 
                 <div className="d-flex ">

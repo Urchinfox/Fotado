@@ -29,6 +29,24 @@ input:focus {
     box-shadow: none !important;
 }
 
+.dropdown-menu {
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transform-origin: top;
+    // transition: all 0.2s ease;
+    transition:
+        opacity 0.18s ease,
+        transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
 
 
 

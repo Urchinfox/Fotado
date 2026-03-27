@@ -8,6 +8,7 @@ import { productsCardData } from '@/app/staticData/data';
 import { useState, useEffect, useTransition } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Loading from '../Loading/Loading';
+import styles from '@/components/Filter/filter.module.scss'
 
 export default function FilterCards({ hasFilter }) {
     const router = useRouter();
@@ -44,7 +45,7 @@ export default function FilterCards({ hasFilter }) {
         <section className="container">
             <div className="row row-cols-lg-2 row-cols-1 g-4">
                 {productsCardData.map((item) => (
-                    <div className="col filterCard" key={item.id}>
+                    <div className={`col ${styles.filterCard}`} key={item.id}>
                         <div
                             className="bg-neutral-90 p-4 rounded-3 h-100 cursor-pointer hover-scale"
                             onClick={() => handleCardClick(item.categoryId)}

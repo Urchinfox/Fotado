@@ -1,10 +1,7 @@
-// {/* css in card.scss */ }
-
-// src/components/Modal/ProductsModal.jsx
 'use client';
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase-browser';
+import styles from '@/components/Modal/modal.module.scss'
 
 export default function ProductsModal() {
     const [productId, setProductId] = useState(null);
@@ -50,7 +47,7 @@ export default function ProductsModal() {
     return (
         <div className="modal fade" id="productModal" tabIndex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-lg">
-                <div className="modal-content py-6 px-8 glass-modal">
+                <div className={`modal-content py-6 px-8 ${styles.glassModal}`}>
                     <div className="d-flex justify-content-between mb-lg-12 mb-8">
 
                         <div className="mt-2">
