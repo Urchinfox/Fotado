@@ -6,6 +6,24 @@ import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import { formatArticleDate } from '@/components/UtilFn/date';
 
+
+//用來動態產生單頁面的 SEO metadata（title、description、openGraph等）
+export async function generateMetadata({ params }) {
+    const supabase = createClient();
+    const { slug } = params;
+
+    const { data: post } = await supabase
+        .from('posts')
+        .select('title, excerpt')
+        .eq('slug', slug)
+        .single();
+
+    return {
+        title: post ? `${post.title} | Fotado Blog` : 'Article | Fotado Blog',
+        description: post?.excerpt || 'Read the latest insights on automotive suspension and performance parts.',
+    };
+}
+
 export default async function BlogPost({ params }) {
 
     const supabase = createClient();
@@ -19,7 +37,7 @@ export default async function BlogPost({ params }) {
 
 
     if (error || !post) {
-        return <div>文章不存在或載入失敗</div>;
+        return <div>Article not found or failed to load</div>;
     }
 
     const formattedDate = formatArticleDate(post);

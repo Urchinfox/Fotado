@@ -136,9 +136,9 @@ export default async function ProductsPage({ searchParams }) {
                                 <div className="mb-6">
                                     <i className="bi bi-search fs-1 text-neutral-60"></i>
                                 </div>
-                                <h3 className="fs-3 fw-light mb-3">目前尚無此類商品</h3>
-                                <p className="fs-5 mb-4">該類別正在積極開發中，敬請期待！</p>
-                                <p className="mb-5">或點擊上方其他類別繼續探索更多產品～</p>
+                                <h3 className="fs-3 fw-light mb-3">No products available in this category</h3>
+                                <p className="fs-5 mb-4">This category is currently under development. Stay tuned!</p>
+                                <p className="mb-5">Or explore other categories above to discover more products.</p>
                             </div>
                         )}
                     </section>
@@ -149,8 +149,8 @@ export default async function ProductsPage({ searchParams }) {
                 </>
             ) : (
                 <div className="text-center py-12 text-neutral-40">
-                    <p className="fs-4">請從上方選擇類別開始瀏覽</p>
-                    <p>點擊篩選卡片或使用上方篩選條，即可查看產品</p>
+                    <p className="fs-4">Please select a category above to start browsing</p>
+                    <p>Click on the filter cards or use the filter bar above to view products</p>
                 </div>
             )}
 

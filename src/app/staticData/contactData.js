@@ -3,15 +3,15 @@ export const contactData = [
         id: 1,
         icon: 'bi bi-envelope',
         title: 'Email address',
-        txt: 'carico.auto@msa.hinet.net',
-        href: 'mailto:cs@web4theme.com'
+        txt: 'carico.auto@gmail.com',
+        href: 'mailto:carico.auto@gmail.com'
     },
     {
         id: 2,
         icon: 'bi bi-phone',
         title: 'Phone number',
         txt: ' +886-2-2276-6545',
-        href: 'tel:+886-2-3278918'
+        href: 'tel:886-2-2276-6545'
     },
     {
         id: 3,

@@ -1,20 +1,18 @@
 // components/SidebarClient.js
 'use client';
-import styles from '@/app/(home)/blog/layout.module.scss'
-
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { formatArticleDate } from '../UtilFn/date';
+import styles from '@/app/(home)/blog/blog.module.scss'
 
 export default function SidebarClient({ allTags, popularPosts }) {
     const searchParams = useSearchParams();
     const currentTag = searchParams.get('tag');
-    console.log(popularPosts)
     return (
-        <div className="bg-white rounded-4 py-lg-10 px-lg-6 p-0">
+        <div className={`rounded-4 py-lg-10 px-lg-6 p-0 ${styles.sideBar}`}>
             {/* Categories */}
-            <div className="border-lg-bottom border-0 pb-lg-8 pb-0 border-neutral-60">
-                <p className="mb-5">Categories</p>
+            <div className="border-lg-bottom border-0 pb-lg-8 pb-0 border-neutral-60 my-lg-0 my-9">
+                <h2 className="mb-5 fs-5 d-lg-block d-none">Categories</h2>
                 <div>
                     <Link
                         href="/blog"
@@ -31,7 +29,7 @@ export default function SidebarClient({ allTags, popularPosts }) {
                             <Link
                                 key={tag}
                                 href={`/blog?tag=${encodeURIComponent(tag)}`}
-                                className={`d-inline-block me-2 mb-3 py-2 px-3 rounded-pill ${isActive ? 'bg-dark text-neutral-30' : 'bg-neutral-30 text-neutral-60'
+                                className={`d-inline-block me-2 mb-3 py-2 px-3 rounded-pill  ${isActive ? 'bg-dark text-neutral-30' : 'bg-neutral-30 text-neutral-60'
                                     }`}
                             >
                                 {tag} ({count})
@@ -43,7 +41,7 @@ export default function SidebarClient({ allTags, popularPosts }) {
 
             {/* Popular posts 保持靜態 */}
             <div className="mt-8 d-none d-lg-block">
-                <p className="my-5">Popular posts</p>
+                <h2 className="my-5 fs-5">Popular Posts</h2>
                 <div>
                     {popularPosts.length === 0 ? (
                         <p className="text-neutral-60">暫無熱門文章</p>
@@ -52,9 +50,9 @@ export default function SidebarClient({ allTags, popularPosts }) {
                             return (
                                 <div className="mb-5" key={post.id}>
                                     <Link href={`/blog/${post.slug}`} className="text-decoration-none">
-                                        <h6 className="text-dark mb-1 fs-7">
+                                        <h3 className="text-dark mb-1 fs-7">
                                             {index + 1}. {post.title}
-                                        </h6>
+                                        </h3>
                                     </Link>
                                     <div className="ps-8">
                                         <span className="d-block text-neutral-70">

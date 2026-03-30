@@ -19,9 +19,12 @@
 // prodcutsCard-----------------------------------
 .productsCard {
     &-img {
+        object-fit: cover;
+
         @include mobile {
             width: 161px;
             height: 115px;
+            object-fit: contain;
         }
     }
 

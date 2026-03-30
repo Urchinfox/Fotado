@@ -18,7 +18,7 @@ export default function BlogCard({ post = {} }) {
                         src={post.thumbnail_url || testImg} // 用 post 的圖片，沒有的話用預設
                         width={280}
                         height={321}
-                        alt={post.title}
+                        alt={`${post.title} - Fotado Automotive Blog`}
                     />
                 </div>
 
@@ -27,7 +27,7 @@ export default function BlogCard({ post = {} }) {
                 <div className="position-absolute start-0 bottom-0 p-3 mb-2 w-100" style={{ zIndex: 2 }}>
                     <h2 className="fs-8 text-white">{post.title}</h2>
                     <p className="text-white mb-2 fs-9">
-                        {post.excerpt || '文章摘要載入中...'} {/* 用 excerpt */}
+                        {post.excerpt || 'Read more about this topic...'} {/* 用 excerpt */}
                     </p>
                     <div className="mb-2">
                         {
@@ -56,14 +56,14 @@ export default function BlogCard({ post = {} }) {
         <div className={`d-block d-lg-none ${styles.blogCardMb}`}>
             <Link href={`/blog/${post.slug}${searchParams.size > 0 ? '?' + searchParams.toString() : ''}`}>
 
-                <div className="d-flex ">
+                <div className="d-flex">
                     <div className="me-4">
                         <Image
                             src={post.thumbnail_url || testImg} // 用 post 的圖片，沒有的話用預設
-                            alt={post.title}
+                            alt={`${post.title} - Fotado Blog`}
                             width={100}
                             height={100}
-                            className="blogCardMb-img object-fit-cover h-100"
+                            className="blogCardMb-img object-fit-cover rounded-3"
                         />
                     </div>
                     <div className="flex-grow-1" style={{ minWidth: 0 }}>
@@ -87,9 +87,14 @@ export default function BlogCard({ post = {} }) {
                             </div>
                         </div>
                         <p className="text-dark mb-1 fs-9">
-                            {post.excerpt || '文章摘要載入中...'} {/* 用 excerpt */}
+                            {post.excerpt || 'Read more about this topic...'} {/* 用 excerpt */}
                         </p>
-                        <div><time dateTime="" className="text-neutral-60 fs-9">May 20</time></div>
+                        <time className="text-neutral-60 fs-9">
+                            {new Date(post.created_at || post.updated_at).toLocaleDateString('en-US', {
+                                month: 'short',
+                                day: 'numeric'
+                            })}
+                        </time>
                     </div>
 
                 </div>

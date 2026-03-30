@@ -1,56 +1,55 @@
-'use client'
+// components/Header/DeskHeader.jsx
 import Link from "next/link";
-import Logo from '../../shared/image/Fotado.png'
 import Image from "next/image";
-import styles from '@/components/Header/header.module.scss'
-function DeskHeader() {
+import Logo from '../../shared/image/Fotado.png';
+import styles from '@/components/Header/header.module.scss';
+
+export default function DeskHeader() {
     return (
-        <>
-            <header className="d-flex align-items-center justify-content-between px-11 pt-5">
-                <div>
-                    <a href="/" className="block">
-                        <Image
-                            className="img-base"
-                            src={Logo}
-                            alt="Fotado"
-                            width={441}
-                            height={83}
-                            priority
-                        />
-                    </a>
+        <header role="banner" className="d-flex align-items-center justify-content-between px-11 pt-5">
+            <div>
+                <Link href="/" aria-label="Fotado Homepage">
+                    <Image
+                        className="img-base"
+                        src={Logo}
+                        alt="Fotado - Premium Performance Suspension Parts"
+                        width={441}
+                        height={83}
+                        priority
+                    />
+                </Link>
+            </div>
 
-                </div>
-
-                <nav>
-                    <ul className="d-flex">
-                        <li className="me-6">
-                            <Link href="/products" className={`${styles.txtHover} a-text`}>
-                                Product
-                            </Link>
-                        </li>
-
-
-                        <li className="me-6">
-                            <Link className={`${styles.txtHover} a-text`} href='/news'>News</Link>
-                        </li>
-                        <li className="me-6">
-                            <Link className={`${styles.txtHover} a-text`} href='/blog'>Blog</Link>
-                        </li>
-                        <li className="me-6">
-                            <Link className={`${styles.txtHover} a-text`} href='/about'>About</Link>
-                        </li>
-                        <li>
-                            <Link className={`${styles.txtHover} a-text`} href='/contact'>Contact</Link>
-                        </li>
-                    </ul>
-
-                </nav>
-
-            </header>
-
-
-        </>
-    )
+            {/* 主要導航 */}
+            <nav aria-label="Main Navigation">
+                <ul className="d-flex">
+                    <li className="me-6">
+                        <Link href="/products" className={`${styles.txtHover} a-text`}>
+                            Product
+                        </Link>
+                    </li>
+                    <li className="me-6">
+                        <Link href="/news" className={`${styles.txtHover} a-text`}>
+                            News
+                        </Link>
+                    </li>
+                    <li className="me-6">
+                        <Link href="/blog" className={`${styles.txtHover} a-text`}>
+                            Blog
+                        </Link>
+                    </li>
+                    <li className="me-6">
+                        <Link href="/about" className={`${styles.txtHover} a-text`}>
+                            About
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/contact" className={`${styles.txtHover} a-text`}>
+                            Contact
+                        </Link>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+    );
 }
-
-export default DeskHeader;

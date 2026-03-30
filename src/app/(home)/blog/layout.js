@@ -3,6 +3,15 @@ import { createClient } from '@/lib/supabase-server';
 
 import BlogSideBar from '@/components/Blog/BlogSideBar';
 
+export const metadata = {
+    title: 'Blog | Fotado - Automotive Suspension Insights & Tips',
+    description: 'Read the latest articles about car suspension systems, performance upgrades, maintenance tips, and industry knowledge from Fotado.',
+    openGraph: {
+        title: 'Blog | Fotado - Automotive Suspension Insights & Tips',
+        description: 'Expert articles on suspension parts, control arms, shock absorbers, and vehicle performance.',
+    },
+};
+
 export default async function BlogLayout({ children, searchParams }) {
     const supabase = createClient();
 

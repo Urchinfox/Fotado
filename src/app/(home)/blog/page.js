@@ -3,12 +3,17 @@ import { createClient } from '@/lib/supabase-server';
 import BlogPage from '@/components/Pagination/BlogPage';
 import BlogListClient from '@/components/Blog/BlogListClient';
 
+export const metadata = {
+    title: 'Blog | Fotado - Suspension Knowledge & Automotive Tips',
+    description: 'Explore in-depth articles about car suspension systems, performance parts, maintenance guides, and industry insights from Fotado.',
+};
+
 export default async function Blog({ searchParams }) {
     const supabase = createClient();
 
     const tag = searchParams.tag || null;  // 從 URL ?tag=xxx 拿
     const page = Number(searchParams.page) || 1;
-    const pageSize = 3; // 每頁 3 筆
+    const pageSize = 9; // 每頁 9 筆
     const offset = (page - 1) * pageSize;
 
     let query = supabase
@@ -24,7 +29,7 @@ export default async function Blog({ searchParams }) {
 
     if (error) {
         console.error('抓文章失敗:', error);
-        return <div>載入文章失敗，請稍後再試</div>;
+        return <div>Failed to load articles. Please try again later.</div>;
     }
 
     const totalPages = Math.ceil((count || 0) / pageSize);

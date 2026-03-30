@@ -1,12 +1,12 @@
-export const productsCardData = [
+export const filterCardData = [
     {
         id: 1,
         categoryId: '3799e829-1bee-4168-8fb1-c59771ef31c7',
         title: 'Control Arm',
         img: 'https://ijyfjztjgvkvzshoiyke.supabase.co/storage/v1/object/public/product-images/FT-15F133-ADJ.webp',
         txt: 'Engineered for precision and durability, our control arms deliver superior handling and stability—keeping your wheels aligned even under extreme performance conditions..',
-        alt: '',
-        link: '/',
+        alt: 'Control Arm',
+
     },
     {
         id: 2,
@@ -14,8 +14,8 @@ export const productsCardData = [
         title: 'Stabilizer link',
         img: 'https://ijyfjztjgvkvzshoiyke.supabase.co/storage/v1/object/public/product-images/FT-15F133-ADJ.webp',
         txt: 'Enhance cornering performance and minimize body roll. Our stabilizer links are built to keep your ride steady, no matter how sharp the turn..',
-        alt: '',
-        link: '/',
+        alt: 'Stabilizer Link',
+
 
     },
     {
@@ -24,8 +24,7 @@ export const productsCardData = [
         title: 'Shock Absorber',
         img: 'https://ijyfjztjgvkvzshoiyke.supabase.co/storage/v1/object/public/product-images/FT-15F133-ADJ.webp',
         txt: 'Experience the perfect balance of comfort and control. Our high-performance shock absorbers smooth out every bump, giving you confidence on any road',
-        alt: '',
-        link: '',
+        alt: 'Shock Absorber',
     },
     {
         id: 4,
@@ -33,8 +32,7 @@ export const productsCardData = [
         title: 'Lateral Link',
         img: 'https://ijyfjztjgvkvzshoiyke.supabase.co/storage/v1/object/public/product-images/FT-15F133-ADJ.webp',
         txt: 'Designed for strength and stability, our lateral links maintain precise wheel alignment and traction, ensuring unmatched control through every curve.',
-        alt: '',
-        link: '',
+        alt: 'Lateral Link',
     }
 ];
 

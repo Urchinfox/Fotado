@@ -1,5 +1,20 @@
 @use '@/shared/mixins' as *;
 
+
+
+
+// __________________Blog sideBar --------------------
+
+.sideBar {
+    background-color: #fff;
+
+    @include mobile {
+        background-color: transparent;
+    }
+}
+
+// __________________Blog content --------------------
+
 .contentImg {
     width: 200px;
     height: 380;
