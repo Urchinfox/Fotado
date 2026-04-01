@@ -53,7 +53,7 @@ export default function RootLayout({ children }) {
                 />
             </head>
             <body className='d-flex flex-column min-vh-100'>
-                <BootstrapLoader />
+                <BootstrapLoader />  {/* bootstrap function */}
                 {children}
             </body>
         </html>

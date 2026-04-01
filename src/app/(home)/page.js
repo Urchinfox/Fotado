@@ -18,6 +18,7 @@ export default async function Home() {
   // FilterBar 需要的資料
   const filterData = await getFilterData();
   return (<>
+    {/* Banner */}
     <section className='mt-5'>
       <h1 className={`${styles.srOnly}`}>Fotado - Premium Performance Suspension & Chassis Parts</h1>
 
@@ -93,7 +94,7 @@ export default async function Home() {
     </div> */}
 
 
-
+    {/* features */}
     <section className='mt-10 d-none d-lg-block'>
       <div className="container">
         <div className="row row-cols-1 row-cols-lg-3 g-4">
@@ -168,6 +169,7 @@ export default async function Home() {
       </div>
     </section>
 
+    {/* Performance */}
     <section className='mt-lg-15 mt-11'>
       <div className="container">
         <div className="row">
@@ -200,7 +202,7 @@ export default async function Home() {
       <NewsCard />
     </section>
 
-
+    {/* what we do */}
     <section className='mb-lg-15 mb-12'>
       <div className="container-lg p-0">
         <div className='p-lg-5 p-0'>
@@ -233,7 +235,6 @@ export default async function Home() {
         </div>
       </div>
     </section>
-
 
 
   </>

@@ -1,0 +1,16 @@
+# robots.txt for Fotado Website
+
+User-agent: *
+Disallow: /admin/products
+Disallow: /login
+
+
+# 明確允許主要公開頁面
+Allow: /
+Allow: /products
+Allow: /blog
+Allow: /about
+Allow: /contact
+
+# Sitemap 位置（以後加上會更好）
+Sitemap: https://fotado.com.tw/sitemap.xml

@@ -110,7 +110,6 @@ export default async function ProductsPage({ searchParams }) {
 
     return (
         <>
-
             <div className='my-12 container'>
                 <FilterBar
                     systems={filterData.systems}

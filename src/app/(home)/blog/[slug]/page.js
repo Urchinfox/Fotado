@@ -37,7 +37,7 @@ export default async function BlogPost({ params }) {
 
 
     if (error || !post) {
-        return <div>Article not found or failed to load</div>;
+        return <div className='fs-2 text-center'>Article not found or failed to load</div>;
     }
 
     const formattedDate = formatArticleDate(post);

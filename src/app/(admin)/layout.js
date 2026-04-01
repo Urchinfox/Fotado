@@ -3,7 +3,12 @@ import { createClient } from '@/lib/supabase-server';
 import { redirect } from 'next/navigation';
 import LogoutButton from '@/components/LogoutBtn';
 
-
+export const metadata = {
+    robots: {
+        index: false,
+        follow: false,
+    },
+};
 
 export default async function AdminLayout({ children }) {
     const supabase = createClient();

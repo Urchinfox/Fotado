@@ -61,7 +61,7 @@ export default async function BlogLayout({ children, searchParams }) {
                     <BlogSideBar allTags={allTags} popularPosts={popularPosts || []} />
                 </div>
 
-                {/* 右邊內容 */}
+                {/* 右邊內容  (page.js)*/}
                 <div className="col-12 col-lg-9">
                     {children}
                 </div>

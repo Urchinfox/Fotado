@@ -1,3 +1,11 @@
+export const metadata = {
+    robots: {
+        index: false,
+        follow: false,
+    },
+};
+
+
 function authLayout({ children }) {
     return (
         <>
