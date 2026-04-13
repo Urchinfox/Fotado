@@ -11,6 +11,7 @@ import worker from '@/shared/image/worker.webp'
 import { getFilterData } from '@/components/UtilFn/getFilterData';
 import styles from '../page.module.scss';
 
+export const dynamic = 'force-dynamic';
 
 
 export default async function Home() {
