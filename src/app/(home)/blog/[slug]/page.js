@@ -79,6 +79,12 @@ export default async function BlogPost({ params }) {
             <ReactMarkdown rehypePlugins={[rehypeRaw]}>{post.content}</ReactMarkdown>
         </div>
 
+        <div className='text-center mb-8'>
+
+            <a className='btn btn-secondary ' href="/https://carico-b2c.com/">Find Your Parts</a>
+        </div>
+
+
 
     </>
     );

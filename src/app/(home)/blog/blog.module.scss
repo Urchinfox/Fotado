@@ -65,4 +65,14 @@
     li {
         list-style: circle;
     }
+
+    a {
+        color: #2563eb;
+        text-decoration: underline;
+    }
+
+    a:hover {
+        color: #1d4ed8;
+    }
+
 }

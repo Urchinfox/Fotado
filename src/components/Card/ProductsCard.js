@@ -5,7 +5,7 @@ import styles from '@/components/Card/card.module.scss'
 
 export default function ProductsCard({ cardsData = [], categoryMap = {} }) {
     if (cardsData.length === 0) return null;
-    console.log(cardsData)
+    // console.log(cardsData)
 
     return (
         <div className={`container ${styles.productsCard}`}>
