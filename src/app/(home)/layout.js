@@ -2,6 +2,8 @@
 import DeskHeader from "@/components/Header/DeskHeader";
 import Footer from '@/components/Footer/Footer';
 import MobileHeader from "@/components/Header/MobileHeader";
+export const dynamic = 'force-dynamic';
+
 
 export const metadata = {
   title: 'Fotado | Premium Automotive Suspension & Chassis Parts',
