@@ -16,7 +16,8 @@ export const metadata = {
     },
     description: 'High-performance automotive suspension parts and chassis upgrades.',
     icons: {
-        icon: '/favicon.ico', //待放icon圖片
+        icon: '/favicon-new.ico',     // 改成新檔名        
+        // apple: '/apple-touch-icon.png', add later if needed
     },
     robots: {
         index: true,
