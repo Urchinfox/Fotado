@@ -29,11 +29,6 @@ export default function DeskHeader() {
                         </Link>
                     </li>
                     <li className="me-6">
-                        <Link href="/news" className={`${styles.txtHover} a-text`}>
-                            News
-                        </Link>
-                    </li>
-                    <li className="me-6">
                         <Link href="/blog" className={`${styles.txtHover} a-text`}>
                             Blog
                         </Link>

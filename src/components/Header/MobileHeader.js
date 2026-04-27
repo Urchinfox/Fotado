@@ -76,11 +76,6 @@ export default function MobileHeader() {
                                         </Link>
                                     </li>
                                     <li className="mb-6">
-                                        <Link href="/news" className={`${styles.txtHover} txt-hover a-text`}>
-                                            <span onClick={closeMenu}>News</span>
-                                        </Link>
-                                    </li>
-                                    <li className="mb-6">
                                         <Link href="/blog" className={`${styles.txtHover} txt-hover a-text`}>
                                             <span onClick={closeMenu}>Blog</span>
                                         </Link>

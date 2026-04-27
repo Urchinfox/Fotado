@@ -13,4 +13,4 @@ Allow: /about
 Allow: /contact
 
 # Sitemap 位置（以後加上會更好）
-Sitemap: https://fotado.com.tw/sitemap.xml
+Sitemap: https://www.fotado.com.tw/sitemap.xml

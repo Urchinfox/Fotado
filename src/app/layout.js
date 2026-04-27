@@ -16,14 +16,39 @@ export const metadata = {
     },
     description: 'High-performance automotive suspension parts and chassis upgrades.',
     icons: {
-        icon: '/favicon-new.ico',     // 改成新檔名        
+        icon: '/favicon-new.ico',
         // apple: '/apple-touch-icon.png', add later if needed
+
     },
     robots: {
         index: true,
         follow: true,
     },
+    // --- 以下為新增的縮圖與社群分享設定 ---
+    openGraph: {
+        title: 'Fotado | High-Performance Automotive Parts',
+        description: 'Premium automotive suspension parts and chassis upgrades for ultimate performance.',
+        url: 'https://www.fotado.com.tw',
+        siteName: 'Fotado',
+        images: [
+            {
+                url: '/thumbnail.jpg', //
+                width: 1200,
+                height: 630,
+                alt: 'Fotado Automotive Parts',
+            },
+        ],
+        locale: 'zh_TW',
+        type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Fotado | High-Performance Automotive Parts',
+        description: 'Premium automotive suspension parts and chassis upgrades.',
+        images: ['/thumbnail.jpg'],
+    },
 };
+
 
 export default function RootLayout({ children }) {
     return (
