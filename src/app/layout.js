@@ -1,6 +1,7 @@
 import '../shared/globals.scss';
 import BootstrapLoader from '@/components/BootstrapLoader';
 import { Inter } from 'next/font/google';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 // 載入字型（推薦使用 Inter 或 Roboto，效能較好）
 const inter = Inter({
@@ -81,6 +82,8 @@ export default function RootLayout({ children }) {
             <body className='d-flex flex-column min-vh-100'>
                 <BootstrapLoader />  {/* bootstrap function */}
                 {children}
+
+                <GoogleAnalytics gaId="G-1BNGP2TV7M" />
             </body>
         </html>
     );
