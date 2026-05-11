@@ -44,54 +44,6 @@ export default async function Home() {
       </div>
     </section>
 
-    {/* <div className='border rounded-3 py-10 bg-white shadow d-block d-lg-none' style={{ marginTop: '-30px', zIndex: '10', position: 'relative' }}>
-      <div className="container">
-        <div className='mb-6'>
-          <p className='fw-bolder mb-2'>System</p>
-          <Link href='/' className='btn btn-sm btn-neutral-20'>suspension</Link>
-        </div>
-        <div className='mb-6'>
-          <p className='fw-bolder mb-2'>Part</p>
-          <Link href='/' className='btn btn-sm btn-neutral-20 me-2 mb-2'>Shock Absorber</Link>
-          <Link href='/' className='btn btn-sm btn-neutral-20 me-2 mb-2 bg-dark text-white'>Control Arm</Link>
-          <Link href='/' className='btn btn-sm btn-neutral-20 me-2 mb-2'>Lateral Link</Link>
-          <Link href='/' className='btn btn-sm btn-neutral-20 me-2 mb-2'>Stabilizer Link</Link>
-        </div>
-        <div className='mb-6'>
-          <p className='fw-bolder mb-2'>Brands</p>
-          <div className="d-flex">
-            <div className='text-center'>
-              <p className='d-inline-block me-2 p-6 rounded-circle bg-neutral-20'>Ford</p>
-              <p>Ford</p>
-            </div>
-            <div className='text-center'>
-              <p className='d-inline-block me-2 p-6 rounded-circle bg-neutral-20'>Kia</p>
-              <p>Kia</p>
-            </div>
-            <div className='text-center'>
-              <p className='d-inline-block me-2 p-6 rounded-circle bg-neutral-20'>Audi</p>
-              <p>Audi</p>
-            </div>
-            <div className='text-center'>
-              <p className='d-inline-block me-2 p-6 rounded-circle bg-neutral-20'>kia</p>
-              <p>kia</p>
-            </div>
-
-          </div>
-        </div>
-        <div className='mb-12'>
-          <p className='fw-bolder mb-2'>Search</p>
-          <div className="position-relative me-2">
-            <input type="text" className="bg-neutral-20 ps-8 py-1 rounded-pill border-0 " placeholder='OEM or FT NO.' />
-            <i className="text-dark bi bi-search position-absolute top-50 start-0 translate-middle-y px-2"></i>
-          </div>
-        </div>
-        <div className='text-center'>
-          <button type='button' className='border-0 rounded-pill bg-neutral-90 text-light py-2 px-4'><i className="bi bi-search"></i> Search</button>
-        </div>
-      </div>
-    </div> */}
-
 
     {/* features */}
     <section className='mt-10 d-none d-lg-block'>

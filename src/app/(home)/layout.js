@@ -25,7 +25,7 @@ export const metadata = {
     siteName: 'Fotado',
     images: [
       {
-        url: '/http://192.168.2.52:3000/public/Fotado-og-img.png',   //1200x630 的 og:image 待拿真正圖片網址
+        url: '/thumbnail.jpg',
         width: 1200,
         height: 630,
         alt: 'Fotado Performance Suspension Parts',
@@ -39,7 +39,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Fotado | Premium Automotive Suspension & Chassis Parts',
     description: 'High-performance suspension parts and chassis upgrades for performance vehicles.',
-    images: ['https://fotado.com.tw/images/og-image.jpg'],
+    images: ['/thumbnail.jpg'],
   },
 
   robots: {

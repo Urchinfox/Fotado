@@ -32,3 +32,20 @@ export default function sitemap() {
         },
     ];
 }
+
+
+
+// 未來若要加入動態資料庫資料，可參考此結構：
+// export default async function sitemap() {
+//     // 假設從資料庫取得所有產品
+//     // const products = await getProducts();
+    
+//     // const productUrls = products.map((item) => ({
+//     //     url: `https://www.fotado.com.tw/products/${item.id}`,
+//     //     lastModified: item.updatedAt,
+//     //     changeFrequency: 'weekly',
+//     //     priority: 0.8,
+//     // }));
+    
+//     // return [...baseUrls, ...productUrls];
+// }

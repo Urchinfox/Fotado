@@ -48,7 +48,8 @@ export default function FilterModal({
                                                     <a
                                                         className="dropdown-item"
                                                         href="#"
-                                                        onClick={() => {
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
                                                             setSelectedSystem(sys);
                                                             setSelectedPart(null);
                                                             setSelectedMake(null);
@@ -77,7 +78,8 @@ export default function FilterModal({
                                                         <a
                                                             className="dropdown-item"
                                                             href="#"
-                                                            onClick={() => {
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
                                                                 setSelectedPart(part);
                                                                 setSelectedMake(null);
                                                                 setSelectedModel(null);
@@ -88,7 +90,7 @@ export default function FilterModal({
                                                     </li>
                                                 ))
                                             ) : (
-                                                <li><a className="dropdown-item disabled">查無資料</a></li>
+                                                <li><a className="dropdown-item disabled">No parts found</a></li>
                                             )}
                                         </ul>
                                     </div>
@@ -108,7 +110,8 @@ export default function FilterModal({
                                                         <a
                                                             className="dropdown-item"
                                                             href="#"
-                                                            onClick={() => {
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
                                                                 setSelectedMake(make);
                                                                 setSelectedModel(null);
                                                             }}
@@ -118,7 +121,7 @@ export default function FilterModal({
                                                     </li>
                                                 ))
                                             ) : (
-                                                <li><a className="dropdown-item disabled">查無車型</a></li>
+                                                <li><a className="dropdown-item disabled">No makes found</a></li>
                                             )}
                                         </ul>
                                     </div>
@@ -138,7 +141,10 @@ export default function FilterModal({
                                                         <a
                                                             className="dropdown-item"
                                                             href="#"
-                                                            onClick={() => setSelectedModel(model)}
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                setSelectedModel(model)
+                                                            }}
                                                         >
                                                             {model}
                                                         </a>
@@ -156,6 +162,7 @@ export default function FilterModal({
                                     <p className='fw-bolder mb-2'>FT NO.</p>
                                     <div className="position-relative">
                                         <input
+                                            aria-label="Filter by FT Number"
                                             type="text"
                                             className="form-control ps-7 rounded-pill"
                                             placeholder='FT NO.'

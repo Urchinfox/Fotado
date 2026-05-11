@@ -1,8 +1,8 @@
 'use client'
 import Image from 'next/image';
-import news from '@/shared/image/news.webp'
-import news1 from '@/shared/image/news1.webp'
-import news2 from '@/shared/image/news2.webp'
+import aapex from '@/shared/image/aapex.webp'
+import sema from '@/shared/image/sema.webp'
+import dubai from '@/shared/image/dubai.webp'
 import Link from 'next/link';
 import styles from '../Card/card.module.scss'
 
@@ -11,21 +11,21 @@ export default function NewsCard() {
     const newsData = [
         {
             id: 1,
-            src: news,
-            title: 'Fotado is dedicated to redefining vehicle performance.',
-            date: '2024-05-10',
+            src: sema,
+            title: 'Fotado Shines at SEMA Show 2025: Redefining Performance Tuning.',
+            date: '2025-11-05',
         },
         {
             id: 2,
-            src: news1,
-            title: 'Fotado is dedicated to redefining vehicle performance.',
-            date: '2024-05-10',
+            src: aapex,
+            title: 'Global Footprint: Recap of Our Success at AAPEX Las Vegas 2024.',
+            date: '2024-11-02',
         },
         {
             id: 3,
-            src: news2,
-            title: 'Fotado is dedicated to redefining vehicle performance.',
-            date: '2024-05-10',
+            src: dubai,
+            title: 'Building Connections: Fotado’s Journey Through AAPEX 2023 (Dubai).',
+            date: '2023-11-01',
         },
     ];
 
@@ -37,41 +37,41 @@ export default function NewsCard() {
                         <h2>Latest News</h2>
                         <p>What’s Next for Fotado</p>
                     </div>
-                    <div>
+                    {/* pending button for future news page */}
+                    {/* <div>
                         <Link className="btn btn-neutral-90" href='/news'>
                             More
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
 
 
                 <ul className={`${styles.newsCard} mt-9 d-flex`}>
                     {newsData.map((item) => (
                         <li key={item.id} className="position-relative mx-4 text-white">
-                            <Image
-                                className="rounded-4 w-100 object-fit-cover"
-                                src={item.src}
-                                width={336}
-                                height={400}
-                                alt={item.title}
-                            />
 
-                            <div className={`${styles.newsCardContent} d-flex justify-content-between align-items-end h-100 p-7 position-absolute top-0 start-0`}>
-                                <div>
-                                    <p className="mb-2 ">{item.title}</p>
-                                    <time dateTime={item.date}>{item.date}</time>
+                            <Link href="/" className="text-white text-decoration-none">
+                                <Image
+                                    className="rounded-4 w-100 object-fit-cover"
+                                    src={item.src}
+                                    width={336}
+                                    height={400}
+                                    alt={item.title}
+                                />
+
+                                <div className={`${styles.newsCardContent} d-flex justify-content-between align-items-end h-100 p-7 position-absolute top-0 start-0 w-100`}>
+                                    <div>
+                                        <p className="mb-2 fw-bold">{item.title}</p>
+                                        <time dateTime={item.date}>{item.date}</time>
+                                    </div>
+                                    <div className="d-flex flex-column">
+                                        <i className="fs-1 bi bi-arrow-up-right-circle-fill mt-auto"></i>
+                                    </div>
                                 </div>
-                                <div className="d-flex flex-column">
-                                    <i className="fs-1 bi bi-arrow-up-right-circle-fill mt-auto"></i>
-                                </div>
-                            </div>
+                            </Link>
                         </li>
                     ))}
                 </ul>
-
-
-
-
             </div>
         </div>
 

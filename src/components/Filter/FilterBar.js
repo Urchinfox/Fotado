@@ -134,7 +134,8 @@ export default function FilterBar({
                                     <a
                                         className="dropdown-item"
                                         href="#"
-                                        onClick={() => {
+                                        onClick={(e) => {
+                                            e.preventDefault();
                                             setSelectedSystem(sys);
                                             setSelectedPart(null);
                                             setSelectedMake(null);
@@ -161,7 +162,8 @@ export default function FilterBar({
                                         <a
                                             className="dropdown-item"
                                             href="#"
-                                            onClick={() => {
+                                            onClick={(e) => {
+                                                e.preventDefault();
                                                 setSelectedPart(part);
                                                 setSelectedMake(null);
                                                 setSelectedModel(null);
@@ -190,7 +192,8 @@ export default function FilterBar({
                                         <a
                                             className="dropdown-item"
                                             href="#"
-                                            onClick={() => {
+                                            onClick={(e) => {
+                                                e.preventDefault();
                                                 setSelectedMake(make);
                                                 setSelectedModel(null);
                                             }}
@@ -218,7 +221,10 @@ export default function FilterBar({
                                         <a
                                             className="dropdown-item"
                                             href="#"
-                                            onClick={() => setSelectedModel(model)}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                setSelectedModel(model);
+                                            }}
                                         >
                                             {model}
                                         </a>
@@ -234,6 +240,7 @@ export default function FilterBar({
                     <div className="position-relative me-2">
                         <input
                             type="text"
+                            aria-label="Filter by FT Number"
                             className="ps-6 py-1 rounded-pill border-0"
                             placeholder='FT NO.'
                             value={ftNumber}

@@ -11,6 +11,7 @@ const inter = Inter({
 });
 
 export const metadata = {
+    metadataBase: new URL('https://www.fotado.com.tw'),
     title: {
         default: 'Fotado',
         template: '%s | Fotado',
@@ -68,8 +69,8 @@ export default function RootLayout({ children }) {
                             "@context": "https://schema.org",
                             "@type": "Organization",
                             "name": "Fotado",
-                            "url": "https://fotado.com.tw",
-                            "logo": "https://fotado.com.tw/logo.png",
+                            "url": "https://www.fotado.com.tw",
+                            "logo": "https://www.fotado.com.tw/logo.png",
                             "description": "Premium automotive suspension and chassis performance parts",
                             "sameAs": [
                                 "https://www.facebook.com/fotado",
