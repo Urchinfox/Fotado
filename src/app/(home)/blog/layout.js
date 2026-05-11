@@ -3,12 +3,17 @@ import { createClient } from '@/lib/supabase-server';
 
 import BlogSideBar from '@/components/Blog/BlogSideBar';
 
+
 export const metadata = {
-    title: 'Blog | Fotado - Automotive Suspension Insights & Tips',
+    title: {
+        default: 'Blog | Fotado - Automotive Suspension Insights & Tips',
+        template: '%s | Fotado Blog' // ★ 這樣內文頁只需要傳回 "文章標題"，就會變成 "文章標題 | Fotado Blog"
+    },
     description: 'Read the latest articles about car suspension systems, performance upgrades, maintenance tips, and industry knowledge from Fotado.',
     openGraph: {
-        title: 'Blog | Fotado - Automotive Suspension Insights & Tips',
+        title: 'Blog | Fotado',
         description: 'Expert articles on suspension parts, control arms, shock absorbers, and vehicle performance.',
+        type: 'website',
     },
 };
 
@@ -57,14 +62,14 @@ export default async function BlogLayout({ children, searchParams }) {
         <div className="container">
             <div className="row">
                 {/* 左邊 sidebar */}
-                <div className="col-12 col-lg-3">
+                <aside className="col-12 col-lg-3">
                     <BlogSideBar allTags={allTags} popularPosts={popularPosts || []} />
-                </div>
+                </aside>
 
                 {/* 右邊內容  (page.js)*/}
-                <div className="col-12 col-lg-9">
+                <main className="col-12 col-lg-9">
                     {children}
-                </div>
+                </main>
             </div>
         </div>
     );

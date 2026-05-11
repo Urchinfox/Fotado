@@ -19,13 +19,14 @@ export default function BlogCard({ post = {} }) {
                         width={280}
                         height={321}
                         alt={`${post.title} - Fotado Automotive Blog`}
+                        loading="lazy"
                     />
                 </div>
 
                 <div className={`${styles.blogCardGlass}`}></div>
 
                 <div className="position-absolute start-0 bottom-0 p-3 mb-2 w-100" style={{ zIndex: 2 }}>
-                    <h2 className="fs-8 text-white">{post.title}</h2>
+                    <h3 className="fs-8 text-white">{post.title}</h3>
                     <p className="text-white mb-2 fs-9">
                         {post.excerpt || 'Read more about this topic...'} {/* 用 excerpt */}
                     </p>
@@ -46,7 +47,7 @@ export default function BlogCard({ post = {} }) {
                     <Link
                         href={`/blog/${post.slug}${searchParams.size > 0 ? '?' + searchParams.toString() : ''}`}
                         className="bg-neutral-30 rounded-pill py-2 d-block text-center fs-8">
-                        Continue reading →
+                        Read Article →
                     </Link>
                 </div>
             </div>
@@ -61,13 +62,13 @@ export default function BlogCard({ post = {} }) {
                         <Image
                             src={post.thumbnail_url || testImg} // 用 post 的圖片，沒有的話用預設
                             alt={`${post.title} - Fotado Blog`}
-                            width={100}
-                            height={100}
+                            width={80}
+                            height={80}
                             className="blogCardMb-img object-fit-cover rounded-3"
                         />
                     </div>
                     <div className="flex-grow-1" style={{ minWidth: 0 }}>
-                        <h2 className="fs-8 mb-1">{post.title}</h2>
+                        <h3 className="fs-8 mb-1">{post.title}</h3>
                         <div className="mb-1 w-100 overflow-hidden">
                             <div className="d-flex flex-nowrap overflow-x-auto">
                                 {

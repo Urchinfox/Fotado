@@ -9,7 +9,7 @@ export default function SidebarClient({ allTags, popularPosts }) {
     const searchParams = useSearchParams();
     const currentTag = searchParams.get('tag');
     return (
-        <div className={`rounded-4 py-lg-10 px-lg-6 p-0 ${styles.sideBar}`}>
+        <nav className={`rounded-4 py-lg-10 px-lg-6 p-0 ${styles.sideBar}`}>
             {/* Categories */}
             <div className="border-lg-bottom border-0 pb-lg-8 pb-0 border-neutral-60 my-lg-0 my-9">
                 <h2 className="mb-5 fs-5 d-lg-block d-none">Categories</h2>
@@ -19,7 +19,7 @@ export default function SidebarClient({ allTags, popularPosts }) {
                         className={`d-inline-block me-2 mb-3 py-2 px-3 rounded-pill ${!currentTag ? 'bg-dark text-neutral-30' : 'bg-neutral-30 text-neutral-60'
                             }`}
                     >
-                        all
+                        All Articles
                     </Link>
 
                     {allTags.map(({ tag, count }) => {
@@ -44,11 +44,11 @@ export default function SidebarClient({ allTags, popularPosts }) {
                 <h2 className="my-5 fs-5">Popular Posts</h2>
                 <div>
                     {popularPosts.length === 0 ? (
-                        <p className="text-neutral-60">暫無熱門文章</p>
+                        <p className="text-neutral-60">No popular posts available.</p>
                     ) : (
                         popularPosts.map((post, index) => {
                             return (
-                                <div className="mb-5" key={post.id}>
+                                <article className="mb-5" key={post.id}>
                                     <Link href={`/blog/${post.slug}`} className="text-decoration-none">
                                         <h3 className="text-dark mb-1 fs-7">
                                             {index + 1}. {post.title}
@@ -62,12 +62,12 @@ export default function SidebarClient({ allTags, popularPosts }) {
                                             {formatArticleDate(post, 'en-US', { month: 'short', day: 'numeric' })} | {post.reading_time || 5} min read
                                         </span>
                                     </div>
-                                </div>
+                                </article>
                             );
                         })
                     )}
                 </div>
             </div>
-        </div>
+        </nav>
     );
 }

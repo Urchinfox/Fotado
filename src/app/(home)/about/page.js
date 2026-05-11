@@ -46,7 +46,7 @@ export default function About() {
                             {/* Mobile Content */}
                             <div className="position-absolute top-50 start-0 text-white translate-middle-y p-3 d-block d-lg-none">
                                 <p className="text-neutral-60 mb-2">What we do</p>
-                                <h1 className="fs-2 fw-bold my-2">We always make the best</h1>
+                                <h2 className="fs-2 fw-bold my-2">We always make the best</h2>
                                 <p className="mb-8">
                                     Founded in 1981 in New Taipei City, Taiwan, Fotado Enterprise has evolved into a globally recognized supplier of premium automotive aftermarket parts.
                                     With more than 40 years of dedication to quality and innovation, we proudly serve customers on five continents.
