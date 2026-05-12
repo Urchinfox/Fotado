@@ -11,10 +11,10 @@ export default function BlogCard({ post = {} }) {
     const searchParams = useSearchParams()
     return (<>
         <div className="blogCard d-lg-block d-none">
-            <div className="position-relative overflow-hidden d-flex d-lg-block">
+            <div className="position-relative overflow-hidden  d-flex d-lg-block">
                 <div>
                     <Image
-                        className="w-100 h-100 rounded-4 object-fit-cover"
+                        className="w-100 rounded-4 overflow-hidden object-fit-cover"
                         src={post.thumbnail_url || testImg} // 用 post 的圖片，沒有的話用預設
                         width={280}
                         height={321}
