@@ -63,16 +63,19 @@ export default function FilterBar({
     const handleSearch = () => {
         const params = new URLSearchParams();
         setLoading(true);
-
         startTransition(() => {
             if (selectedSystem) params.set('system', selectedSystem.id);
             if (selectedPart) params.set('part', selectedPart.id);
             if (selectedMake) params.set('make', selectedMake);
-            if (selectedModel) params.set('model', selectedModel);
-            if (ftNumber.trim()) params.set('ft', ftNumber.trim());
+            // if (selectedModel) params.set('model', selectedModel);
+            if (selectedModel) {
+                params.set('model', encodeURIComponent(selectedModel));
+            }
 
+            if (ftNumber.trim()) params.set('ft', ftNumber.trim());
             // 回到第一頁
             params.delete('page');
+
 
             router.push(`/products?${params.toString()}`);
 
@@ -91,6 +94,8 @@ export default function FilterBar({
         const model = searchParams.get('model');
         const ft = searchParams.get('ft');
 
+        const decodedModel = model ? decodeURIComponent(model) : null;
+
         // 有 part 或 categoryId → 回填 system & part
         if (partId) {
             const part = allParts.find(p => p.id === partId);
@@ -107,7 +112,7 @@ export default function FilterBar({
 
         // 其他欄位回填或清空
         setSelectedMake(make || null);
-        setSelectedModel(model || null);
+        setSelectedModel(decodedModel || null);   // 使用解碼後的值        setFtNumber(ft || '');
         setFtNumber(ft || '');
 
         // 轉場完成後關閉 loading
